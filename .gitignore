@@ -1,0 +1,54 @@
+# Test files
+test-auth.html
+test-chart.html
+test-functionality.js
+test-login.html
+test-logout.html
+test-map.html
+test-registration.html
+test-user-info.html
+simple-human-impact.html
+stacked-bar-demo.html
+
+# Unnecessary files
+*.log
+*.tmp
+*.bak
+.DS_Store
+Thumbs.db
+
+# Markdown files (except README.md)
+*.md
+!README.md
+
+# Node modules
+node_modules/
+
+# Database files
+# Only ignore temporary or unnecessary database files, not the main aqi_users.db
+*tmp*.db
+*temp*.db
+*.db.backup
+*.db.old
+
+# Environment files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db

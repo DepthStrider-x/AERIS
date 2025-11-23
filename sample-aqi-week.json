@@ -1,0 +1,62 @@
+{
+  "location": "Delhi",
+  "updated": "2023-06-15T14:30:00Z",
+  "forecast": [
+    {
+      "day": "Mon",
+      "aqi": 120,
+      "pm25": 80,
+      "pm10": 50,
+      "temp": 32,
+      "condition": "Unhealthy for Sensitive"
+    },
+    {
+      "day": "Tue",
+      "aqi": 140,
+      "pm25": 90,
+      "pm10": 60,
+      "temp": 34,
+      "condition": "Unhealthy"
+    },
+    {
+      "day": "Wed",
+      "aqi": 160,
+      "pm25": 100,
+      "pm10": 70,
+      "temp": 36,
+      "condition": "Unhealthy"
+    },
+    {
+      "day": "Thu",
+      "aqi": 110,
+      "pm25": 70,
+      "pm10": 45,
+      "temp": 31,
+      "condition": "Unhealthy for Sensitive"
+    },
+    {
+      "day": "Fri",
+      "aqi": 90,
+      "pm25": 50,
+      "pm10": 30,
+      "temp": 30,
+      "condition": "Moderate"
+    },
+    {
+      "day": "Sat",
+      "aqi": 200,
+      "pm25": 120,
+      "pm10": 80,
+      "temp": 35,
+      "condition": "Very Unhealthy"
+    },
+    {
+      "day": "Sun",
+      "aqi": 310,
+      "pm25": 180,
+      "pm10": 120,
+      "temp": 37,
+      "condition": "Hazardous"
+    }
+  ]
+}

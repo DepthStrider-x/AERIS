@@ -1,0 +1,205 @@
+[
+  {
+    "state": "delhi",
+    "aqi": 156,
+    "temp": 32,
+    "humidity": 45,
+    "source": "aqi.json"
+  },
+  {
+    "state": "uttar pradesh",
+    "aqi": 134,
+    "temp": 30,
+    "humidity": 48,
+    "source": "aqi.json"
+  },
+  {
+    "state": "maharashtra",
+    "aqi": 98,
+    "temp": 28,
+    "humidity": 65,
+    "source": "aqi.json"
+  },
+  {
+    "state": "karnataka",
+    "aqi": 76,
+    "temp": 25,
+    "humidity": 70,
+    "source": "aqi.json"
+  },
+  {
+    "state": "west bengal",
+    "aqi": 112,
+    "temp": 29,
+    "humidity": 75,
+    "source": "aqi.json"
+  },
+  {
+    "state": "tamil nadu",
+    "aqi": 65,
+    "temp": 31,
+    "humidity": 68,
+    "source": "aqi.json"
+  },
+  {
+    "state": "rajasthan",
+    "aqi": 145,
+    "temp": 35,
+    "humidity": 30,
+    "source": "aqi.json"
+  },
+  {
+    "state": "madhya pradesh",
+    "aqi": 102,
+    "temp": 29,
+    "humidity": 50,
+    "source": "aqi.json"
+  },
+  {
+    "state": "gujarat",
+    "aqi": 125,
+    "temp": 33,
+    "humidity": 40,
+    "source": "aqi.json"
+  },
+  {
+    "state": "andhra pradesh",
+    "aqi": 88,
+    "temp": 27,
+    "humidity": 72,
+    "source": "aqi.json"
+  },
+  {
+    "state": "odisha",
+    "aqi": 95,
+    "temp": 28,
+    "humidity": 78,
+    "source": "aqi.json"
+  },
+  {
+    "state": "kerala",
+    "aqi": 55,
+    "temp": 26,
+    "humidity": 80,
+    "source": "aqi.json"
+  },
+  {
+    "state": "telangana",
+    "aqi": 118,
+    "temp": 31,
+    "humidity": 42,
+    "source": "aqi.json"
+  },
+  {
+    "state": "punjab",
+    "aqi": 167,
+    "temp": 32,
+    "humidity": 38,
+    "source": "generated"
+  },
+  {
+    "state": "haryana",
+    "aqi": 158,
+    "temp": 33,
+    "humidity": 40,
+    "source": "generated"
+  },
+  {
+    "state": "bihar",
+    "aqi": 142,
+    "temp": 30,
+    "humidity": 55,
+    "source": "generated"
+  },
+  {
+    "state": "assam",
+    "aqi": 78,
+    "temp": 26,
+    "humidity": 85,
+    "source": "generated"
+  },
+  {
+    "state": "chhattisgarh",
+    "aqi": 105,
+    "temp": 29,
+    "humidity": 60,
+    "source": "generated"
+  },
+  {
+    "state": "jharkhand",
+    "aqi": 128,
+    "temp": 30,
+    "humidity": 52,
+    "source": "generated"
+  },
+  {
+    "state": "uttarakhand",
+    "aqi": 92,
+    "temp": 25,
+    "humidity": 65,
+    "source": "generated"
+  },
+  {
+    "state": "himachal pradesh",
+    "aqi": 68,
+    "temp": 22,
+    "humidity": 70,
+    "source": "generated"
+  },
+  {
+    "state": "goa",
+    "aqi": 72,
+    "temp": 29,
+    "humidity": 75,
+    "source": "generated"
+  },
+  {
+    "state": "sikkim",
+    "aqi": 45,
+    "temp": 18,
+    "humidity": 80,
+    "source": "generated"
+  },
+  {
+    "state": "meghalaya",
+    "aqi": 58,
+    "temp": 20,
+    "humidity": 90,
+    "source": "generated"
+  },
+  {
+    "state": "manipur",
+    "aqi": 62,
+    "temp": 23,
+    "humidity": 85,
+    "source": "generated"
+  },
+  {
+    "state": "mizoram",
+    "aqi": 55,
+    "temp": 21,
+    "humidity": 88,
+    "source": "generated"
+  },
+  {
+    "state": "tripura",
+    "aqi": 75,
+    "temp": 25,
+    "humidity": 82,
+    "source": "generated"
+  },
+  {
+    "state": "nagaland",
+    "aqi": 67,
+    "temp": 22,
+    "humidity": 83,
+    "source": "generated"
+  },
+  {
+    "state": "arunachal pradesh",
+    "aqi": 50,
+    "temp": 19,
+    "humidity": 87,
+    "source": "generated"
+  }
+]

@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - AQI Monitor</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/settings.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body class="theme-dark">
+    <div class="navbar">
+        <!-- Left: Your Logo -->
+        <div class="nav-logo"><a href="index.html"></a></div>
+        
+        <!-- Mobile menu button -->
+        <div class="menu-toggle" id="mobileMenu">
+            <i class="fas fa-bars"></i>
+        </div>
+        
+        <!-- Center: Menu + Icons -->
+        <div class="nav-center" id="navCenter">
+            <a href="index.html">Home</a>
+            <a href="#" class="nave-save"><i class="fa-solid fa-magnifying-glass"></i> Search</a>           
+            <a href="#"><i class="fa-solid fa-bell"></i></a>          
+            <a href="map-section/map.html"><i class="fa-solid fa-location-dot"></i> Maps</a>           
+        </div>
+        
+        <!-- Right: Account -->
+        <a href="#" class="nav-account">
+            <i class="fa-solid fa-circle-user"></i>
+            <span>Account</span>
+        </a>
+    </div>
+    
+    <!-- Search Dropdown -->
+    <div class="search-dropdown" id="searchDropdown">
+        <div class="search-input-container">
+            <input type="text" id="searchInput" placeholder="Search for a state..." autocomplete="off">
+            <i class="fa-solid fa-times search-close" id="searchClose"></i>
+        </div>
+        <ul class="search-results" id="searchResults"></ul>
+    </div>
+    
+    <div class="container">
+        <div class="dashboard">
+            <div class="settings-header">
+                <h1>Settings</h1>
+            </div>
+            
+            <div class="settings-content">
+                <form id="settingsForm">
+                    <!-- Theme Settings -->
+                    <div class="settings-section glassmorphism-dark">
+                        <h2><i class="fas fa-palette"></i> Theme</h2>
+                        <div class="setting-group">
+                            <label>Theme Preference</label>
+                            <div class="radio-group">
+                                <label class="radio-option">
+                                    <input type="radio" name="theme" value="light">
+                                    <span class="radio-label">Light</span>
+                                </label>
+                                <label class="radio-option">
+                                    <input type="radio" name="theme" value="dark">
+                                    <span class="radio-label">Dark</span>
+                                </label>
+                                <label class="radio-option">
+                                    <input type="radio" name="theme" value="system">
+                                    <span class="radio-label">System Default</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Units Settings -->
+                    <div class="settings-section glassmorphism-dark">
+                        <h2><i class="fas fa-temperature-high"></i> Units</h2>
+                        <div class="setting-group">
+                            <label>Temperature Unit</label>
+                            <div class="radio-group">
+                                <label class="radio-option">
+                                    <input type="radio" name="temperature_unit" value="C">
+                                    <span class="radio-label">Celsius (°C)</span>
+                                </label>
+                                <label class="radio-option">
+                                    <input type="radio" name="temperature_unit" value="F">
+                                    <span class="radio-label">Fahrenheit (°F)</span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="setting-group">
+                            <label>AQI Scale</label>
+                            <div class="radio-group">
+                                <label class="radio-option">
+                                    <input type="radio" name="aqi_scale" value="US">
+                                    <span class="radio-label">US Standard</span>
+                                </label>
+                                <label class="radio-option">
+                                    <input type="radio" name="aqi_scale" value="IN">
+                                    <span class="radio-label">India Standard</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Home City Settings -->
+                    <div class="settings-section glassmorphism-dark">
+                        <h2><i class="fas fa-home"></i> Home City</h2>
+                        <div class="setting-group">
+                            <label for="default_city">Default City</label>
+                            <input type="text" id="default_city" name="default_city" placeholder="e.g., Delhi, Mumbai">
+                            <p class="help-text">This city will load automatically on the homepage</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Notifications Settings -->
+                    <div class="settings-section glassmorphism-dark">
+                        <h2><i class="fas fa-bell"></i> Notifications</h2>
+                        <div class="setting-group">
+                            <label class="switch">
+                                <input type="checkbox" id="notifications_enabled" name="notifications_enabled">
+                                <span class="slider"></span>
+                            </label>
+                            <span class="switch-label">Enable AQI Alerts</span>
+                        </div>
+                        
+                        <div class="setting-group">
+                            <label for="threshold_value">AQI Threshold</label>
+                            <div class="slider-container">
+                                <input type="range" id="threshold_value" name="threshold_value" min="0" max="500" value="100">
+                                <span class="slider-value" id="thresholdValueDisplay">100</span>
+                            </div>
+                            <p class="help-text">You'll be notified when AQI exceeds this value</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Display Settings -->
+                    <div class="settings-section glassmorphism-dark">
+                        <h2><i class="fas fa-eye"></i> Display</h2>
+                        <div class="setting-group">
+                            <label class="checkbox-option">
+                                <input type="checkbox" id="show_24hr_forecast" name="show_24hr_forecast">
+                                <span class="checkmark"></span>
+                                <span class="checkbox-label">Show 24-hour forecast</span>
+                            </label>
+                        </div>
+                        
+                        <div class="setting-group">
+                            <label class="checkbox-option">
+                                <input type="checkbox" id="show_week_prediction" name="show_week_prediction">
+                                <span class="checkmark"></span>
+                                <span class="checkbox-label">Show weekly prediction</span>
+                            </label>
+                        </div>
+                        
+                        <div class="setting-group">
+                            <label class="checkbox-option">
+                                <input type="checkbox" id="show_health_advice" name="show_health_advice">
+                                <span class="checkmark"></span>
+                                <span class="checkbox-label">Show health advisory</span>
+                            </label>
+                        </div>
+                        
+                        <div class="setting-group">
+                            <label class="checkbox-option">
+                                <input type="checkbox" id="show_global_compare" name="show_global_compare">
+                                <span class="checkmark"></span>
+                                <span class="checkbox-label">Show global comparison</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <!-- Avatar Settings -->
+                    <div class="settings-section glassmorphism-dark">
+                        <h2><i class="fas fa-user-circle"></i> Avatar</h2>
+                        <div class="setting-group">
+                            <label>Choose Avatar</label>
+                            <div class="avatar-options">
+                                <div class="avatar-option selected" data-avatar="default">
+                                    <img src="https://ui-avatars.com/api/?name=User&background=random" alt="Default">
+                                </div>
+                                <div class="avatar-option" data-avatar="preset1">
+                                    <img src="https://ui-avatars.com/api/?name=A&background=random" alt="Preset 1">
+                                </div>
+                                <div class="avatar-option" data-avatar="preset2">
+                                    <img src="https://ui-avatars.com/api/?name=B&background=random" alt="Preset 2">
+                                </div>
+                                <div class="avatar-option" data-avatar="preset3">
+                                    <img src="https://ui-avatars.com/api/?name=C&background=random" alt="Preset 3">
+                                </div>
+                            </div>
+                            <input type="hidden" id="avatar_path" name="avatar_path" value="">
+                        </div>
+                    </div>
+                    
+                    <!-- Save Button -->
+                    <div class="settings-actions">
+                        <button type="submit" class="btn-primary">
+                            <i class="fas fa-save"></i> Save Settings
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Snackbar for notifications -->
+    <div class="snackbar" id="snackbar"></div>
+    
+    <script src="script.js"></script>
+    <script src="js/auth-check.js"></script>
+    <script src="js/settings.js"></script>
+</body>
+</html>
+</file>

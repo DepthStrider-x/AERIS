@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Air Quality Index Monitor</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <!-- Left: Your Logo -->
+        <div class="nav-logo"><a href="#"></a></div>
+        
+        <!-- Mobile menu button -->
+        <div class="menu-toggle" id="mobileMenu">
+            <i class="fas fa-bars"></i>
+        </div>
+        
+        <!-- Center: Menu + Icons -->
+        <div class="nav-center" id="navCenter">
+            <a href="#">Home</a>
+            <a href="#mapSectionPreviewCard"><i class="fa-solid fa-caret-down"></i> Map Overview</a>
+            <a href="#airInsightCard">Today Insights</a>
+            <a href="#" class="nave-save"><i class="fa-solid fa-magnifying-glass"></i> Search</a>           
+            <a href="#" id="notificationBell" aria-label="Notifications" title="Notifications">
+                <i class="fa-solid fa-bell"></i>
+            </a>          
+            <a href="#" id="googleMapsLink"><i class="fa-solid fa-location-dot"></i>Maps</a>           
+        </div>
+        
+        <!-- Notification Dropdown -->
+        <div class="notification-dropdown" id="notificationDropdown">
+            <div class="notification-content">
+                <div class="notification-header">
+                    <h3>Notifications</h3>
+                </div>
+                <div class="notification-body">
+                    <div class="no-notifications">
+                        <i class="fa-solid fa-bell-slash"></i>
+                        <p>No notifications yet</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Right: Account -->
+        <div class="nav-account-dropdown">
+            <a href="#" class="nav-account" id="accountTrigger">
+                <i class="fa-solid fa-circle-user"></i>
+                <span id="accountText">Account</span>
+            </a>
+            <div class="account-dropdown" id="accountDropdown">
+                <!-- Content will be populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+    
+    <!-- Search Dropdown -->
+    <div class="search-dropdown" id="searchDropdown">
+        <div class="search-input-container">
+            <input type="text" id="searchInput" placeholder="Search for a state..." autocomplete="off">
+            <i class="fa-solid fa-times search-close" id="searchClose"></i>
+        </div>
+        <ul class="search-results" id="searchResults"></ul>
+    </div>
+    
+    <div class="container">
+        <div class="dashboard">
+           
+            
+            <!-- Main AQI panel -->
+            <div class="aqi-panel">
+                <!-- Tabs -->
+                <div class="tabs">
+                    <div class="tab active">AQI</div>
+                    <div class="tab">Weather</div>
+                </div>
+                
+                <!-- Panel content -->
+                <div class="panel-content">
+                    <div class="panel-header">
+                        <div class="live-indicator">
+                            <div class="live-dot"></div>
+                            <span class="live-text">LIVE</span>
+                        </div>
+                        <h1>Real-time Air Quality Index (AQI)</h1>
+                    </div>
+                    <div class="location-info">
+                        <div class="location" id="locationName">Loading location...</div>
+                        <div class="location-subtitle">Nearest monitor: 0.5 miles away</div>
+                        <div class="meta-info">Updated <span id="updateTime">2 mins ago</span> • Local time <span id="localTime">14:25</span></div>
+                    </div>
+                    
+                    <div class="main-info">
+                        <div class="aqi-display">
+                            <div class="aqi-main">
+                                <div class="aqi-circle" id="aqiCircle">
+                                    <div class="aqi-number" id="aqiNumber">--</div>
+                                </div>
+                                <div class="aqi-category" id="aqiCategory">Loading...</div>
+                            </div>
+                            <!-- Character image container -->
+                            <div class="aqi-character" id="aqiCharacter">
+                                <img id="characterImage" src="" alt="AQI Character" style="display: none;">
+                            </div>
+                            <div class="aqi-subtext">
+                                <div class="tap-instruction">Tap for more details</div>
+                                <div class="updated-time" id="updatedTime">Updated -- mins ago</div>
+                            </div>
+                        </div>
+                        
+                        <div class="weather-info">
+                            <div class="weather-icon" id="weatherIcon">☀️</div>
+                            <div class="temperature">--°C Sunny</div>
+                            <div class="info-bubbles">
+                                <div class="info-bubble">
+                                    <div class="bubble-label">Humidity</div>
+                                    <div class="bubble-value" id="humidity">--%</div>
+                                </div>
+                                <div class="info-bubble">
+                                    <div class="bubble-label">Wind</div>
+                                    <div class="bubble-value" id="windSpeed">-- km/h</div>
+                                </div>
+                                <div class="info-bubble">
+                                    <div class="bubble-label">UV Index</div>
+                                    <div class="bubble-value" id="uvIndex">--</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="pm-values">
+                        <div class="pm-item">
+                            <div class="pm-label">PM2.5</div>
+                            <div class="pm-value" id="pm25">-- µg/m³</div>
+                        </div>
+                        <div class="pm-item">
+                            <div class="pm-label">PM10</div>
+                            <div class="pm-value" id="pm10">-- µg/m³</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Detailed info (hidden by default) -->
+                    <div class="detailed-info" id="detailedInfo">
+                        <div class="detail-header">
+                            <button class="back-button" id="backButton">
+                                <i class="fas fa-arrow-left"></i> Back
+                            </button>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Humidity</div>
+                            <div class="detail-value" id="detailHumidity">--%</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Temperature</div>
+                            <div class="detail-value" id="detailTemp">--°C</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Wind Speed</div>
+                            <div class="detail-value" id="detailWind">-- km/h</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">PM2.5</div>
+                            <div class="detail-value" id="detailPm25">-- µg/m³</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">PM10</div>
+                            <div class="detail-value" id="detailPm10">-- µg/m³</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Advice section -->
+                    <div class="advice-section">
+                        <div class="advice-placeholder" id="advicePlaceholder">
+                            <div class="dot-flashing"></div>
+                            <div class="generating-text">Generating advice...</div>
+                        </div>
+                        <div class="advice-content" id="adviceContent"></div>
+                    </div>
+                    
+                    <!-- AQI Scale -->
+                    <div class="aqi-scale">
+                        <div class="scale-segment good">Good</div>
+                        <div class="scale-segment moderate">Moderate</div>
+                        <div class="scale-segment unhealthy-s">Unhealthy for Sensitive Groups</div>
+                        <div class="scale-segment unhealthy">Unhealthy</div>
+                        <div class="scale-segment very-unhealthy">Very Unhealthy</div>
+                        <div class="scale-segment hazardous">Hazardous</div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        
+        <!-- Today's Air Insight Section -->
+        <div class="air-insight-section" id="airInsightCard">
+            <div class="air-insight-card">
+                <div class="card-header" id="cardHeader">
+                    <div class="header-content">
+                        <div class="header-left">
+                            <span class="emoji">🌿</span>
+                            <span class="title">Today's Air Insight</span>
+                        </div>
+                        <div class="timestamp" id="insightTimestamp">Updated hour ago</div>
+                    </div>
+                    <div class="short-message" id="shortMessage">Air quality is great today! 😌✨</div>
+                </div>
+                <div class="card-content" id="cardContent">
+                    <div class="full-message" id="fullMessage">
+                        This air feels amazing today 😌✨ Perfect for outdoor activities like jogging, cycling, or having a picnic in the park.
+                    </div>
+                    <div class="professional-advice" id="professionalAdvice">
+                        <strong>Professional Advice:</strong> Even though the air quality is excellent, it's always good to stay hydrated and protect your skin from UV exposure during extended outdoor activities.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Map Section Preview Card -->
+        <div class="map-section-container" style="width: 100%; padding: 0;"> <!-- Added inline style for full width -->
+            <link rel="stylesheet" href="map-section/preview-card.css">
+            <div class="map-section-preview-card" id="mapSectionPreviewCard">
+                <div class="map-section-preview-content">
+                    <div class="map-section-preview-header">
+                        <h3 class="map-section-preview-title">Air Map Overview</h3>
+                        <p class="map-section-preview-subtitle">Tap to explore your area</p>
+                    </div>
+                    <div class="map-section-preview-map">
+                        <img src="map.PNG" alt="Air Quality Map Preview" class="map-section-preview-image"> <!-- Fixed image path -->
+                        <div class="map-section-preview-pin">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#ff0000">
+                                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <script>
+                // Add click event to open the full map
+                document.getElementById('mapSectionPreviewCard').addEventListener('click', function() {
+                    // Add animation class
+                    this.classList.add('map-section-preview-card-clicked');
+                    
+                    // Open the full map page after a short delay for animation
+                    setTimeout(function() {
+                        window.open('map-section/map.html', '_blank');
+                    }, 250);
+                });
+            </script>
+        </div>
+
+        <!-- Today's Weather Section -->
+        <div id="weather-section" class="weather-section-container"></div>
+
+        <!-- 7-Day AQI Prediction Section -->
+        <div id="aqi-week-section" class="aqi-week-container"></div>
+
+        <!-- AQI Awareness Section -->
+        <div id="aqi-awareness-section"></div>
+        
+        <!-- What is AQI Section -->
+        <div id="what-is-aqi-section"></div>
+    </div>
+    
+    <script src="script.js"></script>
+    <!-- Chart.js library for graphs -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Simple AQI Chart JavaScript -->
+    <script src="simple-aqi-chart.js"></script>
+    <!-- What is AQI Section JavaScript -->
+    <script src="what-is-aqi.js"></script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Air Quality Map</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="map.css">
+    <!-- 
+    README for developers:
+    
+    To customize this map:
+    1. To use a custom GeoJSON file, replace assets/india_states.geojson
+    2. To update AQI data, modify assets/data/states_aqi.json
+    3. To change styling, edit map.css variables at the top
+    
+    The map will automatically:
+    - Load GeoJSON boundaries if available
+    - Color states based on AQI values
+    - Show markers for states without boundaries
+    - Display Muzaffarnagar pin with special styling
+    -->
+</head>
+<body>
+    <div class="map-section-header">
+        <button class="map-section-back-button" id="mapBackButton">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m12 19-7-7 7-7"/>
+                <path d="M19 12H5"/>
+            </svg>
+        </button>
+        <h1 class="map-section-title">Air Quality Map</h1>
+    </div>
+    
+    <div class="map-section-container">
+        <div id="mapSectionMap" class="map-section-map"></div>
+    </div>
+    
+    <div id="mapToast" class="map-section-toast">
+        Live data unavailable — showing demo values
+    </div>
+    
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="map.js"></script>
+    <script>
+        // Initialize the map when the page loads
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                await window.mapSectionInit();
+            } catch (error) {
+                console.error('Failed to initialize map:', error);
+            }
+        });
+    </script>
+</body>
+</html>

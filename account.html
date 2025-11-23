@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Dashboard - AQI Monitor</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/account.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body class="theme-dark">
+    <div class="navbar">
+        <!-- Left: Your Logo -->
+        <div class="nav-logo"><a href="index.html"></a></div>
+        
+        <!-- Mobile menu button -->
+        <div class="menu-toggle" id="mobileMenu">
+            <i class="fas fa-bars"></i>
+        </div>
+        
+        <!-- Center: Menu + Icons -->
+        <div class="nav-center" id="navCenter">
+            <a href="index.html">Home</a>
+            <a href="#" class="nave-save"><i class="fa-solid fa-magnifying-glass"></i> Search</a>           
+            <a href="#"><i class="fa-solid fa-bell"></i></a>          
+            <a href="map-section/map.html"><i class="fa-solid fa-location-dot"></i> Maps</a>           
+        </div>
+        
+        <!-- Right: Account -->
+        <a href="#" class="nav-account">
+            <i class="fa-solid fa-circle-user"></i>
+            <span>Account</span>
+        </a>
+    </div>
+    
+    <!-- Search Dropdown -->
+    <div class="search-dropdown" id="searchDropdown">
+        <div class="search-input-container">
+            <input type="text" id="searchInput" placeholder="Search for a state..." autocomplete="off">
+            <i class="fa-solid fa-times search-close" id="searchClose"></i>
+        </div>
+        <ul class="search-results" id="searchResults"></ul>
+    </div>
+    
+    <div class="container">
+        <div class="dashboard">
+            <div class="account-header">
+                <h1>Account Dashboard</h1>
+            </div>
+            
+            <div class="account-content">
+                <div class="profile-section">
+                    <div class="profile-card glassmorphism-dark">
+                        <div class="avatar-container">
+                            <img id="userAvatar" src="https://ui-avatars.com/api/?name=User&background=random" alt="User Avatar">
+                        </div>
+                        <div class="user-info">
+                            <h2 id="userName">Loading...</h2>
+                            <p id="userEmail">Loading...</p>
+                            <p class="member-since">Member since <span id="memberSince">--</span></p>
+                        </div>
+                        <div class="profile-actions">
+                            <button class="btn-primary" id="openSettings">
+                                <i class="fas fa-cog"></i> Open Settings
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="stats-card glassmorphism-dark">
+                        <div class="stat-item">
+                            <div class="stat-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="savedCitiesCount">0</h3>
+                                <p>Saved Cities</p>
+                            </div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-icon">
+                                <i class="fas fa-bell"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="notificationsStatus">Enabled</h3>
+                                <p>Notifications</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="saved-locations-section">
+                    <div class="section-header">
+                        <h2><i class="fas fa-star"></i> Saved Locations</h2>
+                    </div>
+                    <div class="locations-container" id="savedLocationsContainer">
+                        <div class="empty-state" id="emptyLocations">
+                            <i class="fas fa-star"></i>
+                            <p>You haven't saved any locations yet</p>
+                            <p>Visit a city page and click the star to save it</p>
+                        </div>
+                        <!-- Saved locations will be populated here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+    <script src="js/auth-check.js"></script>
+    <script src="js/account.js"></script>
+</body>
+</html>
+</file>
