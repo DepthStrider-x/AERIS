@@ -1,0 +1,225 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "ST_NM": "Delhi"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [77.2, 28.7]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "ST_NM": "Haryana"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [76.0, 29.0]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "ST_NM": "Uttar Pradesh"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [80.5, 27.0]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "ST_NM": "Maharashtra"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [75.5, 18.0]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "ST_NM": "Karnataka"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [76.0, 14.0]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "ST_NM": "Tamil Nadu"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [78.0, 11.0]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "ST_NM": "West Bengal"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [87.0, 24.0]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "ST_NM": "Rajasthan"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [73.0, 26.0]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "ST_NM": "Madhya Pradesh"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [78.0, 23.0]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "ST_NM": "Gujarat"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [71.0, 22.0]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "ST_NM": "Andhra Pradesh"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [79.0, 15.0]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "ST_NM": "Odisha"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [84.0, 20.0]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "ST_NM": "Kerala"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [76.0, 10.0]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "ST_NM": "Telangana"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [79.0, 17.0]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "ST_NM": "Punjab"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [75.0, 31.0]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "ST_NM": "Bihar"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [85.0, 26.0]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "ST_NM": "Assam"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [92.0, 26.0]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "ST_NM": "Chhattisgarh"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [82.0, 21.0]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "ST_NM": "Jharkhand"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [86.0, 23.5]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "ST_NM": "Uttarakhand"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [79.0, 30.0]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "ST_NM": "Himachal Pradesh"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [77.0, 32.0]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "ST_NM": "Goa"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [74.0, 15.2]
+      }
+    }
+  ]
+}

@@ -1,0 +1,126 @@
+/* Map Section Preview Card Styles */
+.map-section-preview-card {
+    background: linear-gradient(135deg, #1a1a2e, #16213e);
+    border-radius: 20px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    margin: 20px 0; /* Changed from margin: 20px auto; */
+    width: 100%; /* Added to make it full width */
+    cursor: pointer;
+    transition: all 0.25s ease;
+    position: relative;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.map-section-preview-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+}
+
+.map-section-preview-content {
+    position: relative;
+}
+
+.map-section-preview-header {
+    padding: 20px;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.8);
+    position: relative;
+    z-index: 2;
+}
+
+.map-section-preview-title {
+    color: #35c5cf;
+    font-size: 22px;
+    font-weight: 600;
+    margin: 0 0 8px 0;
+}
+
+.map-section-preview-subtitle {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 16px;
+    margin: 0;
+    font-weight: 400;
+}
+
+.map-section-preview-map {
+    position: relative;
+    height: 200px;
+    overflow: hidden;
+}
+
+.map-section-preview-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.map-section-preview-card:hover .map-section-preview-image {
+    transform: scale(1.05);
+}
+
+.map-section-preview-pin {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    animation: map-section-pin-pulse 2s infinite;
+}
+
+@keyframes map-section-pin-pulse {
+    0% {
+        transform: translate(-50%, -50%) scale(1);
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1.1);
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+/* Animation for card click */
+.map-section-preview-card-clicked {
+    animation: map-section-card-click 0.25s ease;
+}
+
+@keyframes map-section-card-click {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(0.95);
+        opacity: 0.7;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .map-section-preview-card {
+        margin: 15px 0; /* Changed from margin: 15px auto; */
+        border-radius: 15px;
+    }
+    
+    .map-section-preview-header {
+        padding: 15px;
+    }
+    
+    .map-section-preview-title {
+        font-size: 20px;
+    }
+    
+    .map-section-preview-subtitle {
+        font-size: 14px;
+    }
+    
+    .map-section-preview-map {
+        height: 150px;
+    }
+}

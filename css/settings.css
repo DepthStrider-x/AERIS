@@ -1,0 +1,427 @@
+/* Settings Page Styles */
+
+/* Dark theme variables */
+.theme-dark {
+    --bg-primary: #121212;
+    --bg-secondary: #1e1e1e;
+    --bg-card: #252526;
+    --text-primary: #ffffff;
+    --text-secondary: #cccccc;
+    --text-tertiary: #aaaaaa;
+    --accent-primary: #512da8;
+    --accent-secondary: #7b1fa2;
+    --border-color: #333333;
+    --input-bg: #2d2d30;
+    --input-border: #3f3f46;
+}
+
+.settings-header {
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.settings-header h1 {
+    color: var(--text-primary);
+    font-size: 28px;
+    font-weight: 600;
+    color: black;
+}
+
+.settings-content {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.settings-section {
+    padding: 25px;
+    border-radius: 20px;
+    background: rgba(30, 30, 30, 0.8);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--border-color);
+    animation: fadeInUp 0.5s ease;
+}
+
+.settings-section h2 {
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.setting-group {
+    margin-bottom: 20px;
+}
+
+.setting-group:last-child {
+    margin-bottom: 0;
+}
+
+.setting-group label {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 8px;
+    color: var(--text-primary);
+}
+
+.help-text {
+    font-size: 13px;
+    color: var(--text-tertiary);
+    margin-top: 5px;
+}
+
+/* Radio Group Styles */
+.radio-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.radio-option {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    padding: 10px 15px;
+    border-radius: 10px;
+    background: rgba(81, 45, 168, 0.1);
+    transition: all 0.3s ease;
+}
+
+.radio-option:hover {
+    background: rgba(81, 45, 168, 0.2);
+}
+
+.radio-option input[type="radio"] {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--accent-primary);
+    border-radius: 50%;
+    position: relative;
+    cursor: pointer;
+}
+
+.radio-option input[type="radio"]:checked::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 12px;
+    height: 12px;
+    background: var(--accent-primary);
+    border-radius: 50%;
+}
+
+.radio-label {
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+/* Switch Styles */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 30px;
+    margin-right: 15px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #555;
+    transition: .4s;
+    border-radius: 34px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 22px;
+    width: 22px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+}
+
+input:checked + .slider:before {
+    transform: translateX(30px);
+}
+
+.switch-label {
+    font-weight: 500;
+    color: var(--text-primary);
+    vertical-align: middle;
+}
+
+/* Checkbox Styles */
+.checkbox-option {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    padding: 12px 15px;
+    border-radius: 10px;
+    background: rgba(81, 45, 168, 0.1);
+    transition: all 0.3s ease;
+}
+
+.checkbox-option:hover {
+    background: rgba(81, 45, 168, 0.2);
+}
+
+.checkbox-option input[type="checkbox"] {
+    appearance: none;
+    width: 22px;
+    height: 22px;
+    border: 2px solid var(--accent-primary);
+    border-radius: 5px;
+    position: relative;
+    cursor: pointer;
+}
+
+.checkbox-option input[type="checkbox"]:checked::after {
+    content: '\f00c';
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--accent-primary);
+    font-size: 12px;
+}
+
+.checkbox-label {
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+/* Slider Container */
+.slider-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.slider-container input[type="range"] {
+    flex: 1;
+    height: 6px;
+    border-radius: 5px;
+    background: #555;
+    outline: none;
+    -webkit-appearance: none;
+}
+
+.slider-container input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--accent-primary);
+    cursor: pointer;
+}
+
+.slider-value {
+    min-width: 40px;
+    text-align: center;
+    font-weight: 600;
+    color: var(--accent-primary);
+}
+
+/* Avatar Options */
+.avatar-options {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.avatar-option {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    overflow: hidden;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.avatar-option:hover {
+    transform: scale(1.1);
+}
+
+.avatar-option.selected {
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 0 3px rgba(81, 45, 168, 0.3);
+}
+
+.avatar-option img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Settings Actions */
+.settings-actions {
+    display: flex;
+    justify-content: center;
+    padding: 20px 0;
+}
+
+.settings-actions .btn-primary {
+    padding: 12px 30px;
+    background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.settings-actions .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(81, 45, 168, 0.6);
+}
+
+.settings-actions .btn-primary:active {
+    transform: translateY(0);
+}
+
+/* Snackbar */
+.snackbar {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    padding: 16px 24px;
+    background: #4caf50;
+    color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    transform: translateY(100px);
+    opacity: 0;
+    transition: all 0.3s ease;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.snackbar.show {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.snackbar.error {
+    background: #f44336;
+}
+
+/* Input styles for dark theme */
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+    width: 100%;
+    padding: 12px 15px;
+    border-radius: 10px;
+    border: 1px solid var(--input-border);
+    background: var(--input-bg);
+    color: var(--text-primary);
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus {
+    outline: none;
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 0 3px rgba(81, 45, 168, 0.2);
+}
+
+/* Glassmorphism effect for dark theme */
+.glassmorphism-dark {
+    background: rgba(30, 30, 30, 0.8);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--border-color);
+}
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.settings-section {
+    animation: fadeInUp 0.5s ease forwards;
+}
+
+.settings-section:nth-child(2) {
+    animation-delay: 0.1s;
+}
+
+.settings-section:nth-child(3) {
+    animation-delay: 0.2s;
+}
+
+.settings-section:nth-child(4) {
+    animation-delay: 0.3s;
+}
+
+.settings-section:nth-child(5) {
+    animation-delay: 0.4s;
+}
+
+.settings-section:nth-child(6) {
+    animation-delay: 0.5s;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .radio-group {
+        flex-direction: column;
+    }
+    
+    .checkbox-option {
+        padding: 15px;
+    }
+    
+    .avatar-options {
+        justify-content: center;
+    }
+}
