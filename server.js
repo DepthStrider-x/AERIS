@@ -42,7 +42,7 @@ function parseBody(body) {
 function getUserFromRequest(req) {
   const authHeader = req.headers.authorization;
   if (!authHeader) return null;
-  
+
   try {
     const token = authHeader.split(' ')[1];
     const decoded = auth.verifyToken(token);
@@ -55,7 +55,7 @@ function getUserFromRequest(req) {
 // Start the Python scraper as a child process
 function startScraper() {
   console.log('Starting AQI scraper...');
-  
+
   const scraperProcess = spawn('python', ['AQI_Scraper/scraper.py'], {
     cwd: __dirname,  // Set current working directory to project root
     stdio: ['pipe', 'pipe', 'pipe']  // stdin, stdout, stderr
@@ -85,10 +85,10 @@ const scraperProcess = startScraper();
 
 const server = http.createServer(async (req, res) => {
   console.log(`Request received: ${req.url}`);
-  
+
   const parsedUrl = url.parse(req.url, true);
   const pathname = parsedUrl.pathname;
-  
+
   // Handle API routes
   if (pathname.startsWith('/api/')) {
     try {
@@ -96,13 +96,13 @@ const server = http.createServer(async (req, res) => {
       res.setHeader('Access-Control-Allow-Origin', '*');
       res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
       res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-      
+
       if (req.method === 'OPTIONS') {
         res.writeHead(200);
         res.end();
         return;
       }
-      
+
       // NEW: AQI data endpoint - serve local JSON file
       if (pathname === '/api/aqi' && req.method === 'GET') {
         try {
@@ -116,7 +116,7 @@ const server = http.createServer(async (req, res) => {
         }
         return;
       }
-      
+
       // Authentication routes
       if (pathname === '/api/auth/login' && req.method === 'POST') {
         let body = '';
@@ -137,7 +137,7 @@ const server = http.createServer(async (req, res) => {
         });
         return;
       }
-      
+
       if (pathname === '/api/auth/register' && req.method === 'POST') {
         let body = '';
         req.on('data', chunk => {
@@ -156,7 +156,7 @@ const server = http.createServer(async (req, res) => {
         });
         return;
       }
-      
+
       if (pathname === '/api/auth/logout' && req.method === 'POST') {
         const authHeader = req.headers.authorization;
         if (authHeader) {
@@ -167,7 +167,7 @@ const server = http.createServer(async (req, res) => {
         res.end(JSON.stringify({ message: 'Logged out successfully' }));
         return;
       }
-      
+
       // Check authentication for protected routes
       const user = getUserFromRequest(req);
       if (!user) {
@@ -175,7 +175,7 @@ const server = http.createServer(async (req, res) => {
         res.end(JSON.stringify({ error: 'Unauthorized' }));
         return;
       }
-      
+
       // User routes
       if (pathname === '/api/user' && req.method === 'GET') {
         const userData = await users.getUserById(user.userId);
@@ -183,7 +183,7 @@ const server = http.createServer(async (req, res) => {
         res.end(JSON.stringify(userData));
         return;
       }
-      
+
       // Preferences routes
       if (pathname === '/api/preferences' && req.method === 'GET') {
         const prefs = await preferences.getUserPreferences(user.userId);
@@ -191,7 +191,7 @@ const server = http.createServer(async (req, res) => {
         res.end(JSON.stringify(prefs));
         return;
       }
-      
+
       if (pathname === '/api/preferences' && req.method === 'PUT') {
         let body = '';
         req.on('data', chunk => {
@@ -210,7 +210,7 @@ const server = http.createServer(async (req, res) => {
         });
         return;
       }
-      
+
       // Locations routes
       if (pathname === '/api/locations' && req.method === 'GET') {
         const savedLocations = await locations.getSavedLocations(user.userId);
@@ -218,7 +218,7 @@ const server = http.createServer(async (req, res) => {
         res.end(JSON.stringify(savedLocations));
         return;
       }
-      
+
       if (pathname === '/api/locations' && req.method === 'POST') {
         let body = '';
         req.on('data', chunk => {
@@ -237,7 +237,7 @@ const server = http.createServer(async (req, res) => {
         });
         return;
       }
-      
+
       if (pathname.startsWith('/api/locations/') && req.method === 'DELETE') {
         const locationId = pathname.split('/')[3];
         const result = await locations.removeLocation(user.userId, locationId);
@@ -245,7 +245,7 @@ const server = http.createServer(async (req, res) => {
         res.end(JSON.stringify(result));
         return;
       }
-      
+
       // Check if location is saved
       if (pathname.startsWith('/api/location-check/') && req.method === 'GET') {
         const locationName = decodeURIComponent(pathname.split('/')[3]);
@@ -254,7 +254,7 @@ const server = http.createServer(async (req, res) => {
         res.end(JSON.stringify({ saved: isSaved }));
         return;
       }
-      
+
       // If no route matched
       res.writeHead(404, { 'Content-Type': 'application/json' });
       res.end(JSON.stringify({ error: 'Route not found' }));
@@ -266,19 +266,19 @@ const server = http.createServer(async (req, res) => {
       return;
     }
   }
-  
+
   // Serve static files
   let filePath = '.' + pathname;
-  
+
   // Serve index.html by default
   if (filePath === './') {
     filePath = './index.html';
   }
-  
+
   // Resolve the file extension
   const extname = String(path.extname(filePath)).toLowerCase();
   const contentType = MIME_TYPES[extname] || 'application/octet-stream';
-  
+
   // Read the file
   fs.readFile(filePath, (error, content) => {
     if (error) {

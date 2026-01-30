@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AERIS</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
     <link rel="manifest" href="manifest.json">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
@@ -14,28 +16,29 @@
         }
     </style>
 </head>
+
 <body>
     <div class="navbar">
         <!-- Left: Your Logo -->
         <div class="nav-logo"><a href="#"></a></div>
-        
+
         <!-- Mobile menu button -->
         <div class="menu-toggle" id="mobileMenu">
             <i class="fas fa-bars"></i>
         </div>
-        
+
         <!-- Center: Menu + Icons -->
         <div class="nav-center" id="navCenter">
             <a href="#">Home</a>
             <a href="#mapSectionPreviewCard"><i class="fa-solid fa-caret-down"></i> Map Overview</a>
             <a href="#airInsightCard">Today Insights</a>
-            <a href="#" class="nave-save"><i class="fa-solid fa-magnifying-glass"></i> Search</a>           
+            <a href="#" class="nave-save"><i class="fa-solid fa-magnifying-glass"></i> Search</a>
             <a href="#" id="notificationBell" aria-label="Notifications" title="Notifications">
                 <i class="fa-solid fa-bell"></i>
-            </a>          
-            <a href="#" id="googleMapsLink"><i class="fa-solid fa-location-dot"></i>Maps</a>           
+            </a>
+            <a href="#" id="googleMapsLink"><i class="fa-solid fa-location-dot"></i>Maps</a>
         </div>
-        
+
         <!-- Notification Dropdown -->
         <div class="notification-dropdown" id="notificationDropdown">
             <div class="notification-content">
@@ -50,7 +53,7 @@
                 </div>
             </div>
         </div>
-        
+
         <!-- Right: Account -->
         <div class="nav-account-dropdown">
             <a href="#" class="nav-account" id="accountTrigger">
@@ -62,7 +65,7 @@
             </div>
         </div>
     </div>
-    
+
     <!-- Search Dropdown -->
     <div class="search-dropdown" id="searchDropdown">
         <div class="search-input-container">
@@ -71,11 +74,11 @@
         </div>
         <ul class="search-results" id="searchResults"></ul>
     </div>
-    
+
     <div class="container">
         <div class="dashboard">
-           
-            
+
+
             <!-- Main AQI panel -->
             <div class="aqi-panel">
                 <!-- Tabs -->
@@ -83,7 +86,7 @@
                     <div class="tab active">AQI</div>
                     <div class="tab">Weather</div>
                 </div>
-                
+
                 <!-- Panel content -->
                 <div class="panel-content">
                     <div class="panel-header">
@@ -96,9 +99,10 @@
                     <div class="location-info">
                         <div class="location" id="locationName">Loading location...</div>
                         <div class="location-subtitle">Nearest monitor: 0.5 miles away</div>
-                        <div class="meta-info">Updated <span id="updateTime">2 mins ago</span> • Local time <span id="localTime">14:25</span></div>
+                        <div class="meta-info">Updated <span id="updateTime">2 mins ago</span> • Local time <span
+                                id="localTime">14:25</span></div>
                     </div>
-                    
+
                     <div class="main-info">
                         <div class="aqi-display">
                             <div class="aqi-main">
@@ -116,7 +120,7 @@
                                 <div class="updated-time" id="updatedTime">Updated -- mins ago</div>
                             </div>
                         </div>
-                        
+
                         <div class="weather-info">
                             <div class="weather-icon" id="weatherIcon">☀️</div>
                             <div class="temperature">--°C Sunny</div>
@@ -136,7 +140,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="pm-values">
                         <div class="pm-item">
                             <div class="pm-label">PM2.5</div>
@@ -147,7 +151,7 @@
                             <div class="pm-value" id="pm10">-- µg/m³</div>
                         </div>
                     </div>
-                    
+
                     <!-- Detailed info (hidden by default) -->
                     <div class="detailed-info" id="detailedInfo">
                         <div class="detail-header">
@@ -176,7 +180,7 @@
                             <div class="detail-value" id="detailPm10">-- µg/m³</div>
                         </div>
                     </div>
-                    
+
                     <!-- Advice section -->
                     <div class="advice-section">
                         <div class="advice-placeholder" id="advicePlaceholder">
@@ -185,7 +189,7 @@
                         </div>
                         <div class="advice-content" id="adviceContent"></div>
                     </div>
-                    
+
                     <!-- AQI Scale -->
                     <div class="aqi-scale">
                         <div class="scale-segment good">Good</div>
@@ -195,11 +199,11 @@
                         <div class="scale-segment very-unhealthy">Very Unhealthy</div>
                         <div class="scale-segment hazardous">Hazardous</div>
                     </div>
-                    
+
                 </div>
             </div>
         </div>
-        
+
         <!-- Today's Air Insight Section -->
         <div class="air-insight-section" id="airInsightCard">
             <div class="air-insight-card">
@@ -215,10 +219,12 @@
                 </div>
                 <div class="card-content" id="cardContent">
                     <div class="full-message" id="fullMessage">
-                        This air feels amazing today 😌✨ Perfect for outdoor activities like jogging, cycling, or having a picnic in the park.
+                        This air feels amazing today 😌✨ Perfect for outdoor activities like jogging, cycling, or having
+                        a picnic in the park.
                     </div>
                     <div class="professional-advice" id="professionalAdvice">
-                        <strong>Professional Advice:</strong> Even though the air quality is excellent, it's always good to stay hydrated and protect your skin from UV exposure during extended outdoor activities.
+                        <strong>Professional Advice:</strong> Even though the air quality is excellent, it's always good
+                        to stay hydrated and protect your skin from UV exposure during extended outdoor activities.
                     </div>
                 </div>
             </div>
@@ -234,10 +240,13 @@
                         <p class="map-section-preview-subtitle">Tap to explore your area</p>
                     </div>
                     <div class="map-section-preview-map">
-                        <img src="map.PNG" alt="Air Quality Map Preview" class="map-section-preview-image"> <!-- Fixed image path -->
+                        <img src="map.PNG" alt="Air Quality Map Preview" class="map-section-preview-image">
+                        <!-- Fixed image path -->
                         <div class="map-section-preview-pin">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#ff0000">
-                                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="#ff0000">
+                                <path
+                                    d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
                             </svg>
                         </div>
                     </div>
@@ -246,12 +255,12 @@
 
             <script>
                 // Add click event to open the full map
-                document.getElementById('mapSectionPreviewCard').addEventListener('click', function() {
+                document.getElementById('mapSectionPreviewCard').addEventListener('click', function () {
                     // Add animation class
                     this.classList.add('map-section-preview-card-clicked');
-                    
+
                     // Open the full map page after a short delay for animation
-                    setTimeout(function() {
+                    setTimeout(function () {
                         window.open('map-section/map.html', '_blank');
                     }, 250);
                 });
@@ -266,11 +275,11 @@
 
         <!-- AQI Awareness Section -->
         <div id="aqi-awareness-section"></div>
-        
+
         <!-- What is AQI Section -->
         <div id="what-is-aqi-section"></div>
     </div>
-    
+
     <script src="script.js"></script>
     <!-- Chart.js library for graphs -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -279,4 +288,5 @@
     <!-- What is AQI Section JavaScript -->
     <script src="what-is-aqi.js"></script>
 </body>
+
 </html>

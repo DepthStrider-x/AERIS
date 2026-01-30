@@ -15,24 +15,24 @@ let statesData = [];
 let currentState = null;
 
 // Initialize the page
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     // Check if we're on a state page
     const urlParams = new URLSearchParams(window.location.search);
     const stateName = urlParams.get('name');
-    
+
     if (stateName) {
         loadStateData(stateName);
     } else {
         // Default to Muzaffarnagar if no state is specified
         loadStateData('muzaffarnagar');
     }
-    
+
     // Load states data for search
     loadStatesData();
-    
+
     // Set up search functionality
     setupSearch();
-    
+
     // Set up back button
     setupBackButton();
 });
@@ -77,10 +77,10 @@ function loadStatesData() {
 function loadStateData(stateName) {
     // Convert state name to lowercase for comparison
     const stateNameLower = stateName.toLowerCase();
-    
+
     // Find the state in our data
     const state = statesData.find(s => s.state.toLowerCase() === stateNameLower);
-    
+
     if (state) {
         currentState = state;
         updatePageWithStateData(state);
@@ -121,7 +121,7 @@ function loadStateData(stateName) {
                     'nagaland': 'kohima',
                     'arunachal pradesh': 'itanagar'
                 };
-                
+
                 // Special handling for specific cities
                 if (stateNameLower === 'delhi') {
                     // Check if we have data for new-delhi
@@ -158,10 +158,10 @@ function loadStateData(stateName) {
                         return;
                     }
                 }
-                
+
                 // For other states, try to find a representative city
                 const cityName = stateToCityMap[stateNameLower] || stateNameLower;
-                
+
                 // Check if we have data for this city
                 if (data.cities[cityName] && !data.cities[cityName].error) {
                     const cityData = data.cities[cityName];
@@ -178,7 +178,7 @@ function loadStateData(stateName) {
                     updatePageWithStateData(currentState);
                     return;
                 }
-                
+
                 // If we still don't have data, generate dummy data
                 currentState = {
                     state: stateName,
@@ -214,48 +214,48 @@ function loadStateData(stateName) {
 function updatePageWithStateData(state) {
     // Update state name
     stateNameElement.textContent = state.state.charAt(0).toUpperCase() + state.state.slice(1);
-    
+
     // Update timestamp
     const now = new Date();
     updatedTimeElement.textContent = now.toLocaleDateString();
-    localTimeElement.textContent = now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
-    
+    localTimeElement.textContent = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
     // Update AQI data
     document.querySelector('.aqi-number').textContent = state.aqi;
     updateAQICircle(state.aqi);
-    
+
     // Update weather data
     document.getElementById('temperature').textContent = `${state.temp}°C`;
     document.getElementById('humidity').textContent = `${state.humidity}%`;
     document.getElementById('windSpeed').textContent = `${state.wind_speed} km/h`;
     document.getElementById('uvIndex').textContent = state.uv_index || '--';
-    
+
     // Update PM values
     document.getElementById('pm25').textContent = `${state.pm25} µg/m³`;
     document.getElementById('pm10').textContent = `${state.pm10} µg/m³`;
-    
+
     // Update detailed info
     document.getElementById('detailHumidity').textContent = `${state.humidity}%`;
     document.getElementById('detailTemp').textContent = `${state.temp}°C`;
     document.getElementById('detailWind').textContent = `${state.wind_speed} km/h`;
     document.getElementById('detailPm25').textContent = `${state.pm25} µg/m³`;
     document.getElementById('detailPm10').textContent = `${state.pm10} µg/m³`;
-    
+
     // Update last updated time
     document.getElementById('lastUpdated').textContent = "Updated just now";
-    
+
     // Update advice
     const advice = generateAdvice(state.aqi);
     document.getElementById('adviceContent').textContent = advice;
     document.getElementById('advicePlaceholder').style.display = 'none';
     document.getElementById('adviceContent').style.display = 'block';
-    
+
     // Update air insight card
     updateAirInsightCard(state.aqi);
-    
+
     // Update weather section
     updateWeatherSection(state);
-    
+
     // Update 7-day AQI prediction
     updateAQIWeekSection(state);
 }
@@ -265,12 +265,12 @@ function updateAQICircle(aqi) {
     const aqiCircle = document.getElementById('aqiCircle');
     const aqiCategory = document.getElementById('aqiCategory');
     const category = getAQICategory(aqi);
-    
+
     aqiCircle.style.background = `radial-gradient(circle at center, ${category.color} 0%, ${darkenColor(category.color, 30)} 100%)`;
     aqiCircle.style.boxShadow = `0 0 30px ${category.color}`;
     aqiCategory.textContent = category.level;
     aqiCategory.style.color = category.color;
-    
+
     // Update character image based on AQI
     updateCharacterImage(aqi);
 }
@@ -285,7 +285,7 @@ function getAQICategory(aqi) {
         201: { level: 'Very Unhealthy', color: '#8f3f97', textColor: '#fff' },
         301: { level: 'Hazardous', color: '#7e0023', textColor: '#fff' }
     };
-    
+
     let category = aqiCategories[0];
     for (const level in aqiCategories) {
         if (aqi >= level) {
@@ -300,11 +300,11 @@ function darkenColor(color, percent) {
     let R = parseInt(color.substring(1, 3), 16);
     let G = parseInt(color.substring(3, 5), 16);
     let B = parseInt(color.substring(5, 7), 16);
-    
+
     R = Math.floor(R * (100 - percent) / 100);
     G = Math.floor(G * (100 - percent) / 100);
     B = Math.floor(B * (100 - percent) / 100);
-    
+
     return `#${R.toString(16).padStart(2, '0')}${G.toString(16).padStart(2, '0')}${B.toString(16).padStart(2, '0')}`;
 }
 
@@ -313,7 +313,7 @@ function updateCharacterImage(aqi) {
     const characterImage = document.getElementById('characterImage');
     const aqiCharacter = document.getElementById('aqiCharacter');
     let imageSrc = '';
-    
+
     if (aqi <= 50) {
         // Good - gd_char.png
         imageSrc = 'gd_char.png';
@@ -327,7 +327,7 @@ function updateCharacterImage(aqi) {
         // Unhealthy, Very Unhealthy, Hazardous - haz_char.png
         imageSrc = 'haz_char.png';
     }
-    
+
     // Set the image source and show the container
     characterImage.src = imageSrc;
     characterImage.style.display = 'block';
@@ -363,11 +363,11 @@ function updateAirInsightCard(aqi) {
     const fullMessage = document.getElementById('fullMessage');
     const professionalAdvice = document.getElementById('professionalAdvice');
     const category = getAQICategory(aqi);
-    
+
     // Update card class based on AQI level
     card.className = 'air-insight-card';
     if (aqi > 50) card.classList.add(category.level.toLowerCase().replace(/\s+/g, '-'));
-    
+
     // Update messages based on AQI
     if (aqi <= 50) {
         shortMessage.textContent = "Air quality is great today! 😌✨";
@@ -422,12 +422,12 @@ function updateWeatherSection(state) {
 function generateWeatherCards(state) {
     let cards = '';
     const hours = ['12 AM', '3 AM', '6 AM', '9 AM', '12 PM', '3 PM', '6 PM', '9 PM'];
-    
+
     for (let i = 0; i < hours.length; i++) {
         const temp = state.temp + Math.floor(Math.random() * 5) - 2;
         const aqi = state.aqi + Math.floor(Math.random() * 20) - 10;
         const category = getAQICategory(Math.max(0, aqi));
-        
+
         cards += `
             <div class="weather-section-card">
                 <div class="weather-section-time">${hours[i]}</div>
@@ -445,7 +445,7 @@ function generateWeatherCards(state) {
             </div>
         `;
     }
-    
+
     return cards;
 }
 
@@ -472,13 +472,13 @@ function updateAQIWeekSection(state) {
 function generateAQIGraph(state) {
     const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
     let bars = '';
-    
+
     for (let i = 0; i < days.length; i++) {
         // Generate AQI values that trend around the current state's AQI
         const aqi = state.aqi + Math.floor(Math.random() * 40) - 20;
         const height = Math.min(100, Math.max(10, (aqi / 500) * 100)); // Scale to 0-100%
         const category = getAQICategory(Math.max(0, aqi));
-        
+
         bars += `
             <div class="aqi-week-bar-group">
                 <div class="aqi-week-bar ${category.level.toLowerCase().replace(/\s+/g, '-')}" 
@@ -493,7 +493,7 @@ function generateAQIGraph(state) {
             </div>
         `;
     }
-    
+
     return `
         <div class="aqi-week-y-axis">
             <span>500</span>
@@ -528,48 +528,48 @@ function lightenColor(color, percent) {
     let R = parseInt(color.substring(1, 3), 16);
     let G = parseInt(color.substring(3, 5), 16);
     let B = parseInt(color.substring(5, 7), 16);
-    
+
     R = Math.min(255, Math.floor(R + (255 - R) * percent / 100));
     G = Math.min(255, Math.floor(G + (255 - G) * percent / 100));
     B = Math.min(255, Math.floor(B + (255 - B) * percent / 100));
-    
+
     return `#${R.toString(16).padStart(2, '0')}${G.toString(16).padStart(2, '0')}${B.toString(16).padStart(2, '0')}`;
 }
 
 // Setup search functionality
 function setupSearch() {
     // Show search dropdown when search icon is clicked
-    searchTrigger.addEventListener('click', function(e) {
+    searchTrigger.addEventListener('click', function (e) {
         e.preventDefault();
         showSearchDropdown();
     });
-    
+
     // Close search dropdown when close button is clicked
-    searchClose.addEventListener('click', function() {
+    searchClose.addEventListener('click', function () {
         hideSearchDropdown();
     });
-    
+
     // Close search dropdown when clicking outside
-    document.addEventListener('click', function(e) {
-        if (searchDropdown.style.display === 'block' && 
-            !searchDropdown.contains(e.target) && 
+    document.addEventListener('click', function (e) {
+        if (searchDropdown.style.display === 'block' &&
+            !searchDropdown.contains(e.target) &&
             !searchTrigger.contains(e.target)) {
             hideSearchDropdown();
         }
     });
-    
+
     // Handle input in search field
-    searchInput.addEventListener('input', function() {
+    searchInput.addEventListener('input', function () {
         filterStates(this.value);
     });
-    
+
     // Handle keyboard navigation
-    searchInput.addEventListener('keydown', function(e) {
+    searchInput.addEventListener('keydown', function (e) {
         const items = searchResults.querySelectorAll('li');
         const activeItem = searchResults.querySelector('.active');
         let currentIndex = Array.prototype.indexOf.call(items, activeItem);
-        
-        switch(e.key) {
+
+        switch (e.key) {
             case 'ArrowDown':
                 e.preventDefault();
                 if (currentIndex < items.length - 1) {
@@ -619,17 +619,17 @@ function hideSearchDropdown() {
 
 // Filter states based on search input
 function filterStates(query) {
-    const filteredStates = statesData.filter(state => 
+    const filteredStates = statesData.filter(state =>
         state.state.toLowerCase().includes(query.toLowerCase())
     );
-    
+
     displaySearchResults(filteredStates);
 }
 
 // Display search results
 function displaySearchResults(states) {
     searchResults.innerHTML = '';
-    
+
     if (states.length === 0) {
         const li = document.createElement('li');
         li.textContent = 'No states found';
@@ -637,20 +637,20 @@ function displaySearchResults(states) {
         searchResults.appendChild(li);
         return;
     }
-    
+
     states.forEach((state, index) => {
         const li = document.createElement('li');
         li.textContent = state.state.charAt(0).toUpperCase() + state.state.slice(1);
-        li.addEventListener('click', function() {
+        li.addEventListener('click', function () {
             // Navigate to state page
             window.location.href = `state.html?name=${encodeURIComponent(state.state)}`;
         });
-        
+
         // Add active class to first item
         if (index === 0) {
             li.classList.add('active');
         }
-        
+
         searchResults.appendChild(li);
     });
 }
@@ -659,17 +659,17 @@ function displaySearchResults(states) {
 function setupBackButton() {
     const backButton = document.getElementById('backButton');
     if (backButton) {
-        backButton.addEventListener('click', function() {
+        backButton.addEventListener('click', function () {
             document.querySelector('.main-info').style.display = 'flex';
             document.querySelector('.pm-values').style.display = 'flex';
             document.querySelector('.detailed-info').style.display = 'none';
         });
     }
-    
+
     // Also set up the AQI circle to show detailed info
     const aqiCircle = document.getElementById('aqiCircle');
     if (aqiCircle) {
-        aqiCircle.addEventListener('click', function() {
+        aqiCircle.addEventListener('click', function () {
             document.querySelector('.main-info').style.display = 'none';
             document.querySelector('.pm-values').style.display = 'none';
             document.querySelector('.detailed-info').style.display = 'grid';

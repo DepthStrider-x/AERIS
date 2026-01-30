@@ -43,7 +43,7 @@ const pm10 = document.getElementById('pm10');
 if (mobileMenu && navCenter) {
     mobileMenu.addEventListener('click', () => {
         navCenter.classList.toggle('active');
-        mobileMenu.innerHTML = navCenter.classList.contains('active') ? 
+        mobileMenu.innerHTML = navCenter.classList.contains('active') ?
             '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
     });
 }
@@ -60,31 +60,31 @@ document.addEventListener('click', (event) => {
 
 // Account dropdown functionality
 if (accountTrigger && accountDropdown) {
-    accountTrigger.addEventListener('click', function(e) {
+    accountTrigger.addEventListener('click', function (e) {
         e.preventDefault();
         accountDropdown.classList.toggle('show');
     });
-    
+
     // Close dropdown when clicking outside
-    document.addEventListener('click', function(e) {
+    document.addEventListener('click', function (e) {
         if (!accountTrigger.contains(e.target) && !accountDropdown.contains(e.target)) {
             accountDropdown.classList.remove('show');
         }
     });
-    
+
     // Initialize account dropdown
     initializeAccountDropdown();
 }
 
 // Notification dropdown functionality
 if (notificationBell && notificationDropdown) {
-    notificationBell.addEventListener('click', function(e) {
+    notificationBell.addEventListener('click', function (e) {
         e.preventDefault();
         e.stopPropagation();
-        
+
         // Toggle the dropdown
         notificationDropdown.classList.toggle('show');
-        
+
         // Add a slight delay before focusing to ensure the dropdown is visible
         if (notificationDropdown.classList.contains('show')) {
             setTimeout(() => {
@@ -92,26 +92,26 @@ if (notificationBell && notificationDropdown) {
             }, 100);
         }
     });
-    
+
     // Close dropdown when clicking outside
-    document.addEventListener('click', function(e) {
-        if (notificationDropdown.classList.contains('show') && 
-            !notificationBell.contains(e.target) && 
+    document.addEventListener('click', function (e) {
+        if (notificationDropdown.classList.contains('show') &&
+            !notificationBell.contains(e.target) &&
             !notificationDropdown.contains(e.target)) {
             notificationDropdown.classList.remove('show');
         }
     });
-    
+
     // Close dropdown when pressing Escape key
-    document.addEventListener('keydown', function(e) {
+    document.addEventListener('keydown', function (e) {
         if (e.key === 'Escape' && notificationDropdown.classList.contains('show')) {
             notificationDropdown.classList.remove('show');
             notificationBell.focus();
         }
     });
-    
+
     // Prevent dropdown from closing when clicking inside it
-    notificationDropdown.addEventListener('click', function(e) {
+    notificationDropdown.addEventListener('click', function (e) {
         e.stopPropagation();
     });
 }
@@ -120,13 +120,13 @@ if (notificationBell && notificationDropdown) {
 function openGoogleMaps() {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
-            function(position) {
+            function (position) {
                 const lat = position.coords.latitude;
                 const lng = position.coords.longitude;
                 const googleMapsUrl = `https://www.google.com/maps?q=${lat},${lng}`;
                 window.open(googleMapsUrl, '_blank');
             },
-            function(error) {
+            function (error) {
                 // If geolocation fails, open Google Maps without location
                 console.error('Geolocation error:', error);
                 window.open('https://www.google.com/maps', '_blank');
@@ -139,10 +139,10 @@ function openGoogleMaps() {
 }
 
 // Add event listener for Google Maps link
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const googleMapsLink = document.getElementById('googleMapsLink');
     if (googleMapsLink) {
-        googleMapsLink.addEventListener('click', function(e) {
+        googleMapsLink.addEventListener('click', function (e) {
             e.preventDefault();
             openGoogleMaps();
         });
@@ -152,7 +152,7 @@ document.addEventListener('DOMContentLoaded', function() {
 // Initialize account dropdown based on login status
 async function initializeAccountDropdown() {
     const token = localStorage.getItem('authToken');
-    
+
     if (token) {
         // User is logged in
         try {
@@ -161,11 +161,11 @@ async function initializeAccountDropdown() {
                     'Authorization': `Bearer ${token}`
                 }
             });
-            
+
             if (response.ok) {
                 const userData = await response.json();
                 accountText.textContent = userData.name;
-                
+
                 // Populate dropdown with logged-in content
                 accountDropdown.innerHTML = `
                     <div class="user-info-dropdown">
@@ -189,7 +189,7 @@ async function initializeAccountDropdown() {
                         <i class="fas fa-sign-out-alt"></i> Logout
                     </a>
                 `;
-                
+
                 // Add logout event listener
                 document.getElementById('logoutButton').addEventListener('click', logout);
             } else {
@@ -223,7 +223,7 @@ function showLoggedOutDropdown() {
 // Logout function - redirect to index.html
 async function logout() {
     const token = localStorage.getItem('authToken');
-    
+
     if (token) {
         try {
             await fetch('/api/auth/logout', {
@@ -236,7 +236,7 @@ async function logout() {
             console.error('Error during logout:', error);
         }
     }
-    
+
     localStorage.removeItem('authToken');
     // Redirect to index.html instead of just updating the dropdown
     window.location.href = 'index.html';
@@ -246,14 +246,14 @@ async function logout() {
 async function applyUserSettings() {
     const token = localStorage.getItem('authToken');
     if (!token) return;
-    
+
     try {
         const response = await fetch('/api/preferences', {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
         });
-        
+
         if (response.ok) {
             const preferences = await response.json();
             applySettings(preferences);
@@ -266,48 +266,48 @@ async function applyUserSettings() {
 // Apply settings to the page
 function applySettings(preferences) {
     if (!preferences) return;
-    
+
     // Apply theme
     if (preferences.theme) {
         document.body.className = document.body.className.replace(/theme-\w+/g, '');
         document.body.classList.add(`theme-${preferences.theme}`);
     }
-    
+
     // Apply temperature unit (this would affect how temperatures are displayed)
     if (preferences.temperature_unit) {
         // In a full implementation, you would update all temperature displays
         // For now, we'll just log it
         console.log('Temperature unit set to:', preferences.temperature_unit);
     }
-    
+
     // Apply AQI scale
     if (preferences.aqi_scale) {
         // In a full implementation, you would update how AQI is calculated/displayed
         console.log('AQI scale set to:', preferences.aqi_scale);
     }
-    
+
     // Load default city if set
     if (preferences.default_city) {
         // In a full implementation, you would load data for this city
         console.log('Default city set to:', preferences.default_city);
     }
-    
+
     // Apply display preferences
     if (preferences.show_24hr_forecast !== undefined) {
         // Toggle 24-hour forecast visibility
         console.log('24-hour forecast visibility:', preferences.show_24hr_forecast);
     }
-    
+
     if (preferences.show_week_prediction !== undefined) {
         // Toggle week prediction visibility
         console.log('Week prediction visibility:', preferences.show_week_prediction);
     }
-    
+
     if (preferences.show_health_advice !== undefined) {
         // Toggle health advice visibility
         console.log('Health advice visibility:', preferences.show_health_advice);
     }
-    
+
     if (preferences.show_global_compare !== undefined) {
         // Toggle global comparison visibility
         console.log('Global comparison visibility:', preferences.show_global_compare);
@@ -315,7 +315,7 @@ function applySettings(preferences) {
 }
 
 // Call applyUserSettings when the page loads
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     applyUserSettings();
 });
 
@@ -356,7 +356,7 @@ function updateAQICircle(aqi) {
     aqiNumber.textContent = aqi;
     aqiCategory.textContent = category.level;
     aqiCategory.style.color = category.color; // Match category text color to AQI color
-    
+
     // Update character image based on AQI
     updateCharacterImage(aqi);
 }
@@ -366,18 +366,18 @@ function darkenColor(color, percent) {
     let R = parseInt(color.substring(1, 3), 16);
     let G = parseInt(color.substring(3, 5), 16);
     let B = parseInt(color.substring(5, 7), 16);
-    
+
     R = Math.floor(R * (100 - percent) / 100);
     G = Math.floor(G * (100 - percent) / 100);
     B = Math.floor(B * (100 - percent) / 100);
-    
+
     return `#${R.toString(16).padStart(2, '0')}${G.toString(16).padStart(2, '0')}${B.toString(16).padStart(2, '0')}`;
 }
 
 // Update character image based on AQI level
 function updateCharacterImage(aqi) {
     let imageSrc = '';
-    
+
     if (aqi <= 50) {
         // Good - gd_char.png
         imageSrc = 'gd_char.png';
@@ -391,12 +391,12 @@ function updateCharacterImage(aqi) {
         // Unhealthy, Very Unhealthy, Hazardous - haz_char.png
         imageSrc = 'haz_char.png';
     }
-    
+
     // Set the image source and show the container
     characterImage.src = imageSrc;
     characterImage.style.display = 'block';
     aqiCharacter.style.display = 'block';
-    
+
     // Debug: Log to console to verify the image is being set
     console.log('Setting character image to:', imageSrc);
 }
@@ -409,14 +409,14 @@ function showDetailedInfo(data) {
     detailWind.textContent = `${data.wind_speed || '--'} km/h`;
     detailPm25.textContent = `${data.pm25 || '--'} µg/m³`;
     detailPm10.textContent = `${data.pm10 || '--'} µg/m³`;
-    
+
     // Populate weather info
     humidity.textContent = `${data.humidity || '--'}%`;
     windSpeed.textContent = `${data.wind_speed || '--'} km/h`;
     uvIndex.textContent = data.uv_index || '--';
     pm25.textContent = `${data.pm25 || '--'} µg/m³`;
     pm10.textContent = `${data.pm10 || '--'} µg/m³`;
-    
+
     // Hide main info and show detailed info
     document.querySelector('.main-info').style.display = 'none';
     document.querySelector('.pm-values').style.display = 'none';
@@ -433,7 +433,7 @@ function hideDetailedInfo() {
 // Generate advice based on AQI
 function generateAdvice(aqi) {
     let advice = '';
-    
+
     if (aqi <= 50) {
         advice = "Air quality is good. Safe for outdoor activities.";
     } else if (aqi <= 100) {
@@ -445,7 +445,7 @@ function generateAdvice(aqi) {
     } else {
         advice = "Hazardous air. Stay indoors and use air purifiers.";
     }
-    
+
     return advice;
 }
 
@@ -458,24 +458,24 @@ function updateMainPageData(data) {
     if (pm10 && data.pm10) {
         pm10.textContent = `${data.pm10} µg/m³`;
     }
-    
+
     // Update temperature
     const temperatureElement = document.querySelector('.temperature');
     if (temperatureElement && data.temperature) {
         temperatureElement.textContent = `${data.temperature}°C`;
     }
-    
+
     // Update weather icon based on conditions
     const weatherIcon = document.getElementById('weatherIcon');
     if (weatherIcon) {
         // Remove existing animation classes
         weatherIcon.classList.remove('sunny', 'cloudy', 'rainy', 'snowy');
-        
+
         // Determine weather condition based on data
         // For now, we'll use a simple approach based on temperature and precipitation
         // In a real implementation, you would use actual weather condition data
         let condition = 'sunny'; // default
-        
+
         if (data.temperature < 0) {
             condition = 'snowy';
         } else if (data.humidity > 80) {
@@ -483,11 +483,11 @@ function updateMainPageData(data) {
         } else if (data.humidity > 60) {
             condition = 'cloudy';
         }
-        
+
         // Apply appropriate animation class
         weatherIcon.classList.add(condition);
     }
-    
+
     // Update other weather info
     if (humidity && data.humidity) {
         humidity.textContent = `${data.humidity}%`;
@@ -505,7 +505,7 @@ function showAdvice(aqi) {
     // Show placeholder
     advicePlaceholder.style.display = 'flex';
     adviceContent.style.display = 'none';
-    
+
     // After 1 second, show advice
     setTimeout(() => {
         advicePlaceholder.style.display = 'none';
@@ -526,31 +526,31 @@ function findClosestCity(lat, lon, cities) {
         'bangalore': { lat: 12.9716, lon: 77.5946 },
         'muzaffarnagar': { lat: 29.4709, lon: 77.7036 }
     };
-    
+
     let closestCity = 'delhi';
     let minDistance = Infinity;
-    
+
     for (const city in cityCoords) {
         const cityLat = cityCoords[city].lat;
         const cityLon = cityCoords[city].lon;
-        
+
         // Calculate distance using Haversine formula
         const R = 6371; // Earth radius in km
         const dLat = (cityLat - lat) * Math.PI / 180;
         const dLon = (cityLon - lon) * Math.PI / 180;
-        const a = 
-            Math.sin(dLat/2) * Math.sin(dLat/2) +
-            Math.cos(lat * Math.PI / 180) * Math.cos(cityLat * Math.PI / 180) * 
-            Math.sin(dLon/2) * Math.sin(dLon/2);
-        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+        const a =
+            Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+            Math.cos(lat * Math.PI / 180) * Math.cos(cityLat * Math.PI / 180) *
+            Math.sin(dLon / 2) * Math.sin(dLon / 2);
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
         const distance = R * c;
-        
+
         if (distance < minDistance) {
             minDistance = distance;
             closestCity = city;
         }
     }
-    
+
     return closestCity;
 }
 
@@ -588,17 +588,17 @@ async function fetchAQIData() {
         const response = await fetch('/api/aqi');
         const jsonData = await response.json();
         const dataArray = Object.values(jsonData.cities);
-        
+
         // Filter out cities with errors
         const validCities = dataArray.filter(city => !city.error);
-        
+
         console.log('All cities from API:', Object.keys(jsonData.cities));
-        console.log('Valid cities:', validCities.map(city => ({city: city.city, aqi: city.aqi})));
-        
+        console.log('Valid cities:', validCities.map(city => ({ city: city.city, aqi: city.aqi })));
+
         // Try to get user location
         const location = await getUserLocation();
         let selectedCityData;
-        
+
         if (location) {
             // Find closest city
             const closestCity = findClosestCity(location.lat, location.lon, validCities);
@@ -609,14 +609,14 @@ async function fetchAQIData() {
             selectedCityData = validCities.find(city => {
                 return city.city && city.city.toLowerCase() === 'muzaffarnagar';
             });
-            
+
             // If Muzaffarnagar not found, try variations
             if (!selectedCityData) {
                 selectedCityData = validCities.find(city => {
                     return city.city && city.city.toLowerCase().includes('muzaffarnagar');
                 });
             }
-            
+
             // If still not found, use first valid city
             if (!selectedCityData) {
                 selectedCityData = validCities[0];
@@ -625,17 +625,17 @@ async function fetchAQIData() {
                 console.log('Successfully found Muzaffarnagar:', selectedCityData.city, 'with AQI:', selectedCityData.aqi);
             }
         }
-        
+
         // If still no city found, use first valid city
         if (!selectedCityData) {
             selectedCityData = validCities[0];
         }
-        
+
         // Make sure we have valid city data before proceeding
         if (!selectedCityData) {
             throw new Error('No valid city data available');
         }
-        
+
         // Map the data to expected structure
         const data = {
             aqi: selectedCityData.aqi,
@@ -648,9 +648,9 @@ async function fetchAQIData() {
             time: selectedCityData.time || new Date().toISOString(),
             city: selectedCityData.city
         };
-        
+
         console.log('Final selected city data:', data);
-        
+
         // Update location info
         if (data.city) {
             const cityName = data.city.charAt(0).toUpperCase() + data.city.slice(1).replace(/-/g, ' ');
@@ -658,25 +658,25 @@ async function fetchAQIData() {
         } else {
             document.getElementById('locationName').textContent = 'Live Data, India';
         };
-        
+
         // Update UI with fetched data
         const aqi = data.aqi || 0;
         updateAQICircle(aqi);
         updateAirInsightWithAQI(aqi);
         updateCharacterImage(aqi);
-        
+
         // Update main page data
         updateMainPageData(data);
-        
+
         // Update time
         const updateTime = '2'; // Default to 2 minutes
         updatedTime.textContent = `Updated ${updateTime} mins ago`;
         document.getElementById('updateTime').textContent = `${updateTime} mins ago`;
-        document.getElementById('localTime').textContent = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
-        
+        document.getElementById('localTime').textContent = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
         // Show advice
         showAdvice(aqi);
-        
+
         // Return data for detailed view
         return data;
     } catch (error) {
@@ -693,12 +693,12 @@ async function fetchAQIData() {
             time: '2023-06-15T14:25:00Z',
             city: 'Default'
         };
-        
+
         // Update location info
         document.getElementById('locationName').textContent = 'Default Location';
         document.getElementById('updateTime').textContent = '2 mins ago';
         document.getElementById('localTime').textContent = '14:25';
-        
+
         updateAQICircle(fallbackData.aqi);
         updateAirInsightWithAQI(fallbackData.aqi);
         updateMainPageData(fallbackData);
@@ -715,7 +715,7 @@ let isShowingDetails = false;
 aqiCircle.addEventListener('click', () => {
     // Add rotation animation
     aqiCircle.style.animation = 'rotateCircle 0.8s cubic-bezier(0.4, 0.1, 0.2, 1) forwards';
-    
+
     // After rotation, toggle detailed view
     setTimeout(() => {
         if (!isShowingDetails) {
@@ -726,7 +726,7 @@ aqiCircle.addEventListener('click', () => {
             hideDetailedInfo();
         }
         isShowingDetails = !isShowingDetails;
-        
+
         // Reset animation
         aqiCircle.style.animation = '';
     }, 800);
@@ -736,7 +736,7 @@ aqiCircle.addEventListener('click', () => {
 document.addEventListener('DOMContentLoaded', () => {
     // Fade in body
     document.body.style.opacity = '1';
-    
+
     // Fetch initial data
     fetchAQIData();
 });
@@ -805,7 +805,7 @@ const aqiInsightContent = {
 // Update the card content based on AQI
 function updateAirInsightCard(aqi) {
     let content;
-    
+
     if (aqi <= 50) {
         content = aqiInsightContent.good;
     } else if (aqi <= 100) {
@@ -819,12 +819,12 @@ function updateAirInsightCard(aqi) {
     } else {
         content = aqiInsightContent.hazardous;
     }
-    
+
     // Update card content
     shortMessage.textContent = content.short;
     fullMessage.textContent = content.full;
     professionalAdvice.innerHTML = `<strong>Professional Advice:</strong> ${content.advice}`;
-    
+
     // Update card background class
     airInsightCard.className = 'air-insight-card';
     if (content.bgColor) {
@@ -835,9 +835,9 @@ function updateAirInsightCard(aqi) {
 // Toggle card expansion
 airInsightCard.addEventListener('click', () => {
     cardContent.classList.toggle('expanded');
-    
+
     // Rotate card slightly for visual effect
-    airInsightCard.style.transform = cardContent.classList.contains('expanded') ? 
+    airInsightCard.style.transform = cardContent.classList.contains('expanded') ?
         'rotate(0.5deg) scale(1.01)' : 'rotate(0deg) scale(1)';
 });
 
@@ -852,16 +852,16 @@ function updateAirInsightWithAQI(aqi) {
 window.updateAirInsightWithAQI = updateAirInsightWithAQI;
 
 // Today's Weather Section Implementation
-(function() {
+(function () {
     // Namespaced function to initialize the weather section
-    window.weatherSectionInit = function() {
+    window.weatherSectionInit = function () {
         const weatherSection = document.getElementById('weather-section');
-        
+
         if (!weatherSection) {
             console.warn('Weather section container not found');
             return;
         }
-        
+
         // Create the weather section HTML structure
         weatherSection.innerHTML = `
             <div class="weather-section-header">
@@ -883,25 +883,25 @@ window.updateAirInsightWithAQI = updateAirInsightWithAQI;
                 </div>
             </div>
         `;
-        
+
         // Load weather data and render cards
         loadWeatherData();
-        
+
         // Add event listeners for toggle buttons
         const toggleButtons = weatherSection.querySelectorAll('.weather-section-toggle-btn');
         toggleButtons.forEach(button => {
-            button.addEventListener('click', function() {
+            button.addEventListener('click', function () {
                 // Update active button
                 toggleButtons.forEach(btn => btn.classList.remove('active'));
                 this.classList.add('active');
-                
+
                 // In a real implementation, you would load different data based on the selected period
                 // For now, we'll just reload the same data
                 loadWeatherData();
             });
         });
     };
-    
+
     // Function to load weather data (in a real app, this would fetch from an API)
     function loadWeatherData() {
         // For demonstration purposes, we'll use dummy data
@@ -912,22 +912,22 @@ window.updateAirInsightWithAQI = updateAirInsightWithAQI;
                 // Process the real data
                 const forecastData = [];
                 const now = new Date();
-                
+
                 // Generate 24 hours of forecast data based on current conditions
                 for (let i = 0; i < 24; i++) {
                     const hour = new Date(now);
                     hour.setHours(now.getHours() + i);
-                    
+
                     // Use the current city's data as base and add some variation
-                    const currentCity = Object.keys(data.cities).find(key => 
+                    const currentCity = Object.keys(data.cities).find(key =>
                         data.cities[key] && !data.cities[key].error
                     );
-                    
+
                     if (currentCity && data.cities[currentCity]) {
                         const current = data.cities[currentCity];
                         const aqiVariation = Math.floor(current.aqi + (Math.random() * 40 - 20)); // ±20 variation
                         const tempVariation = current.temp ? Math.floor(current.temp + (Math.random() * 5 - 2.5)) : 25; // ±2.5 variation
-                        
+
                         forecastData.push({
                             time: hour,
                             temperature: tempVariation,
@@ -939,7 +939,7 @@ window.updateAirInsightWithAQI = updateAirInsightWithAQI;
                         });
                     }
                 }
-                
+
                 renderWeatherCards(forecastData);
                 renderTrendLine(forecastData);
             })
@@ -950,16 +950,16 @@ window.updateAirInsightWithAQI = updateAirInsightWithAQI;
                 renderWeatherCards(forecastData);
                 renderTrendLine(forecastData);
             });
-        
+
         // Using dummy data for now
         const forecastData = generateDummyForecastData();
         renderWeatherCards(forecastData);
         renderTrendLine(forecastData);
     }
-    
+
     // Function to convert text condition to our format
     function getWeatherConditionFromText(condition) {
-        switch(condition) {
+        switch (condition) {
             case 'sunny':
             case 'clear':
                 return 'sunny';
@@ -973,23 +973,23 @@ window.updateAirInsightWithAQI = updateAirInsightWithAQI;
                 return 'sunny';
         }
     }
-    
+
     // Function to generate dummy forecast data
     function generateDummyForecastData() {
         const hours = [];
         const now = new Date();
-        
+
         for (let i = 0; i < 24; i++) {
             const hour = new Date(now);
             hour.setHours(now.getHours() + i);
-            
+
             // Generate realistic weather data
             const temp = Math.floor(20 + 10 * Math.sin((i - 6) * Math.PI / 12)); // Temperature curve
             const precipitation = Math.floor(Math.random() * 30); // 0-30% chance of precipitation
             const humidity = Math.floor(40 + Math.random() * 40); // 40-80% humidity
             const windSpeed = (Math.random() * 15).toFixed(1); // 0-15 km/h wind
             const aqi = Math.floor(30 + Math.random() * 120); // AQI between 30-150
-            
+
             hours.push({
                 time: hour,
                 temperature: temp,
@@ -1000,10 +1000,10 @@ window.updateAirInsightWithAQI = updateAirInsightWithAQI;
                 condition: getWeatherCondition(temp, precipitation)
             });
         }
-        
+
         return hours;
     }
-    
+
     // Function to determine weather condition based on temperature and precipitation
     function getWeatherCondition(temp, precipitation) {
         if (precipitation > 70) return 'rainy';
@@ -1012,19 +1012,19 @@ window.updateAirInsightWithAQI = updateAirInsightWithAQI;
         if (temp > 15) return 'cloudy';
         return 'sunny';
     }
-    
+
     // Function to render weather cards
     function renderWeatherCards(forecastData) {
         const container = document.getElementById('weatherCardsContainer');
-        
+
         if (!container) {
             console.error('Weather cards container not found');
             return;
         }
-        
+
         // Clear existing content
         container.innerHTML = '';
-        
+
         // Check if we have data
         if (!forecastData || forecastData.length === 0) {
             container.innerHTML = `
@@ -1036,32 +1036,32 @@ window.updateAirInsightWithAQI = updateAirInsightWithAQI;
             `;
             return;
         }
-        
+
         // Create and append cards for each hour
         forecastData.forEach(hourData => {
             const card = createWeatherCard(hourData);
             container.appendChild(card);
         });
-        
+
         // Add event listeners for card expansion
         addCardEventListeners();
     }
-    
+
     // Function to create a single weather card
     function createWeatherCard(data) {
         const card = document.createElement('div');
         card.className = `weather-section-card ${data.condition}`;
-        
+
         // Format time (e.g., "9 AM" or "14:00")
         const hours = data.time.getHours();
-        const formattedTime = hours === 0 ? '12 AM' : 
-                             hours < 12 ? `${hours} AM` : 
-                             hours === 12 ? '12 PM' : 
-                             `${hours - 12} PM`;
-        
+        const formattedTime = hours === 0 ? '12 AM' :
+            hours < 12 ? `${hours} AM` :
+                hours === 12 ? '12 PM' :
+                    `${hours - 12} PM`;
+
         // Get AQI description and color class
         const aqiInfo = getAQIInfo(data.aqi);
-        
+
         card.innerHTML = `
             <div class="weather-section-time">${formattedTime}</div>
             <div class="weather-section-temp">
@@ -1075,10 +1075,10 @@ window.updateAirInsightWithAQI = updateAirInsightWithAQI;
                 <div class="weather-section-wind"><strong>Wind:</strong> ${data.windSpeed} km/h</div>
             </div>
         `;
-        
+
         return card;
     }
-    
+
     // Function to get AQI information (color class and description)
     function getAQIInfo(aqi) {
         if (aqi <= 50) {
@@ -1113,16 +1113,16 @@ window.updateAirInsightWithAQI = updateAirInsightWithAQI;
             };
         }
     }
-    
+
     // Function to add event listeners for card expansion
     function addCardEventListeners() {
         const cards = document.querySelectorAll('.weather-section-card');
-        
+
         cards.forEach(card => {
-            card.addEventListener('click', function() {
+            card.addEventListener('click', function () {
                 // Toggle expanded class
                 this.classList.toggle('expanded');
-                
+
                 // Add animation effect
                 if (this.classList.contains('expanded')) {
                     this.style.transform = 'scale(1.05)';
@@ -1134,58 +1134,58 @@ window.updateAirInsightWithAQI = updateAirInsightWithAQI;
             });
         });
     }
-    
+
     // Function to render the trend line
     function renderTrendLine(forecastData) {
         const trendPointsContainer = document.querySelector('.weather-section-trend-points');
-        
+
         if (!trendPointsContainer) {
             console.error('Trend points container not found');
             return;
         }
-        
+
         // Clear existing points
         trendPointsContainer.innerHTML = '';
-        
+
         // Check if we have data
         if (!forecastData || forecastData.length === 0) {
             return;
         }
-        
+
         // Get min and max temperatures for scaling
         const temps = forecastData.map(data => data.temperature);
         const minTemp = Math.min(...temps);
         const maxTemp = Math.max(...temps);
         const tempRange = maxTemp - minTemp || 1; // Avoid division by zero
-        
+
         // Create points for each hour
         forecastData.forEach((data, index) => {
             const point = document.createElement('div');
             point.className = 'weather-section-trend-point';
-            
+
             // Calculate position (0-100% for X, based on index)
             const xPercent = (index / (forecastData.length - 1)) * 100;
-            
+
             // Calculate Y position based on temperature (invert Y axis since 0 is top)
             const yPercent = 100 - ((data.temperature - minTemp) / tempRange) * 100;
-            
+
             point.style.left = `${xPercent}%`;
             point.style.top = `${yPercent}%`;
-            
+
             // Add tooltip
             point.title = `${formatTime(data.time)}: ${data.temperature}°C`;
-            
+
             trendPointsContainer.appendChild(point);
         });
     }
-    
+
     // Helper function to format time
     function formatTime(date) {
         const hours = date.getHours();
         const minutes = date.getMinutes().toString().padStart(2, '0');
         return `${hours}:${minutes}`;
     }
-    
+
     // Initialize the weather section when the DOM is loaded
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', window.weatherSectionInit);
@@ -1195,16 +1195,16 @@ window.updateAirInsightWithAQI = updateAirInsightWithAQI;
 })();
 
 // 7-Day AQI Prediction Section Implementation
-(function() {
+(function () {
     // Namespaced function to initialize the AQI week section
-    window.aqiWeekSectionInit = function() {
+    window.aqiWeekSectionInit = function () {
         const aqiWeekSection = document.getElementById('aqi-week-section');
-        
+
         if (!aqiWeekSection) {
             console.warn('AQI week section container not found');
             return;
         }
-        
+
         // Create the AQI week section HTML structure
         aqiWeekSection.innerHTML = `
             <div class="aqi-week-header">
@@ -1226,25 +1226,25 @@ window.updateAirInsightWithAQI = updateAirInsightWithAQI;
                 </div>
             </div>
         `;
-        
+
         // Load AQI week data and render cards
         loadAQIWeekData();
-        
+
         // Add event listeners for toggle buttons
         const toggleButtons = aqiWeekSection.querySelectorAll('.aqi-week-toggle-btn');
         toggleButtons.forEach(button => {
-            button.addEventListener('click', function() {
+            button.addEventListener('click', function () {
                 // Update active button
                 toggleButtons.forEach(btn => btn.classList.remove('active'));
                 this.classList.add('active');
-                
+
                 // In a real implementation, you would load different data based on the selected period
                 // For now, we'll just reload the same data
                 loadAQIWeekData();
             });
         });
     };
-    
+
     // Function to load AQI week data (in a real app, this would fetch from an API)
     function loadAQIWeekData() {
         // For demonstration purposes, we'll use dummy data
@@ -1277,31 +1277,31 @@ window.updateAirInsightWithAQI = updateAirInsightWithAQI;
                 renderAQIWeekTrendLine(forecastData);
             });
         */
-        
+
         // Using dummy data for now
         const forecastData = generateDummyAQIWeekData();
         renderAQIWeekCards(forecastData);
         renderAQIWeekTrendLine(forecastData);
     }
-    
+
     // Function to generate dummy AQI week data
     function generateDummyAQIWeekData() {
         const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
         const forecast = [];
-        
+
         for (let i = 0; i < 7; i++) {
             // Generate realistic AQI data with some variation
             const baseAQI = 100 + i * 20;
             const variation = Math.floor(Math.random() * 40) - 20; // -20 to +20
             const aqi = Math.max(30, baseAQI + variation); // Minimum 30
-            
+
             // Generate PM2.5 and PM10 based on AQI
             const pm25 = Math.floor(aqi * 0.6 + Math.random() * 20);
             const pm10 = Math.floor(aqi * 0.8 + Math.random() * 30);
-            
+
             // Generate temperature
             const temp = Math.floor(25 + Math.sin(i) * 5 + Math.random() * 5);
-            
+
             // Determine condition based on AQI
             let condition = 'Good';
             if (aqi > 300) condition = 'Hazardous';
@@ -1309,7 +1309,7 @@ window.updateAirInsightWithAQI = updateAirInsightWithAQI;
             else if (aqi > 150) condition = 'Unhealthy';
             else if (aqi > 100) condition = 'Unhealthy for Sensitive';
             else if (aqi > 50) condition = 'Moderate';
-            
+
             forecast.push({
                 day: days[i],
                 aqi: aqi,
@@ -1319,22 +1319,22 @@ window.updateAirInsightWithAQI = updateAirInsightWithAQI;
                 condition: condition
             });
         }
-        
+
         return forecast;
     }
-    
+
     // Function to render AQI week cards
     function renderAQIWeekCards(forecastData) {
         const container = document.getElementById('aqiWeekCardsContainer');
-        
+
         if (!container) {
             console.error('AQI week cards container not found');
             return;
         }
-        
+
         // Clear existing content
         container.innerHTML = '';
-        
+
         // Check if we have data
         if (!forecastData || forecastData.length === 0) {
             container.innerHTML = `
@@ -1346,26 +1346,26 @@ window.updateAirInsightWithAQI = updateAirInsightWithAQI;
             `;
             return;
         }
-        
+
         // Create and append cards for each day
         forecastData.forEach(dayData => {
             const card = createAQIWeekCard(dayData);
             container.appendChild(card);
         });
-        
+
         // Add event listeners for card expansion
         addAQIWeekCardEventListeners();
     }
-    
+
     // Function to create a single AQI week card
     function createAQIWeekCard(data) {
         const card = document.createElement('div');
         card.className = 'aqi-week-card';
-        
+
         // Get AQI color class
         const aqiColorClass = getAQIColorClass(data.aqi);
         const aqiDescription = getAQIDescription(data.aqi);
-        
+
         card.innerHTML = `
             <div class="aqi-week-day">${data.day}</div>
             <div class="aqi-week-aqi">
@@ -1384,10 +1384,10 @@ window.updateAirInsightWithAQI = updateAirInsightWithAQI;
                 <div class="aqi-week-recommendation"><strong>Recommendation:</strong> ${getRecommendation(data.aqi)}</div>
             </div>
         `;
-        
+
         return card;
     }
-    
+
     // Function to get AQI color class
     function getAQIColorClass(aqi) {
         if (aqi <= 50) return 'good';
@@ -1397,7 +1397,7 @@ window.updateAirInsightWithAQI = updateAirInsightWithAQI;
         if (aqi <= 300) return 'very-unhealthy';
         return 'hazardous';
     }
-    
+
     // Function to get AQI description
     function getAQIDescription(aqi) {
         if (aqi <= 50) return 'Good';
@@ -1407,7 +1407,7 @@ window.updateAirInsightWithAQI = updateAirInsightWithAQI;
         if (aqi <= 300) return 'Very Unhealthy';
         return 'Hazardous';
     }
-    
+
     // Function to get recommendation based on AQI
     function getRecommendation(aqi) {
         if (aqi <= 50) return 'Air quality is satisfactory. Enjoy outdoor activities.';
@@ -1417,16 +1417,16 @@ window.updateAirInsightWithAQI = updateAirInsightWithAQI;
         if (aqi <= 300) return 'Health alert! Everyone should avoid all outdoor exertion. Stay indoors and keep windows closed.';
         return 'Health warning of emergency conditions. The entire population is more likely to be affected. Avoid all physical outdoor activities.';
     }
-    
+
     // Function to add event listeners for card expansion
     function addAQIWeekCardEventListeners() {
         const cards = document.querySelectorAll('.aqi-week-card');
-        
+
         cards.forEach(card => {
-            card.addEventListener('click', function() {
+            card.addEventListener('click', function () {
                 // Toggle expanded class
                 this.classList.toggle('expanded');
-                
+
                 // Add animation effect
                 if (this.classList.contains('expanded')) {
                     this.style.transform = 'scale(1.05)';
@@ -1438,51 +1438,51 @@ window.updateAirInsightWithAQI = updateAirInsightWithAQI;
             });
         });
     }
-    
+
     // Function to render the AQI week trend line
     function renderAQIWeekTrendLine(forecastData) {
         const trendPointsContainer = document.querySelector('.aqi-week-trend-points');
-        
+
         if (!trendPointsContainer) {
             console.error('AQI week trend points container not found');
             return;
         }
-        
+
         // Clear existing points
         trendPointsContainer.innerHTML = '';
-        
+
         // Check if we have data
         if (!forecastData || forecastData.length === 0) {
             return;
         }
-        
+
         // Get min and max AQI values for scaling
         const aqiValues = forecastData.map(data => data.aqi);
         const minAQI = Math.min(...aqiValues);
         const maxAQI = Math.max(...aqiValues);
         const aqiRange = maxAQI - minAQI || 1; // Avoid division by zero
-        
+
         // Create points for each day
         forecastData.forEach((data, index) => {
             const point = document.createElement('div');
             point.className = `aqi-week-trend-point ${getAQIColorClass(data.aqi)}`;
-            
+
             // Calculate position (0-100% for X, based on index)
             const xPercent = (index / (forecastData.length - 1)) * 100;
-            
+
             // Calculate Y position based on AQI (invert Y axis since 0 is top)
             const yPercent = 100 - ((data.aqi - minAQI) / aqiRange) * 100;
-            
+
             point.style.left = `${xPercent}%`;
             point.style.top = `${yPercent}%`;
-            
+
             // Add tooltip
             point.title = `${data.day}: AQI ${data.aqi}`;
-            
+
             trendPointsContainer.appendChild(point);
         });
     }
-    
+
     // Initialize the AQI week section when the DOM is loaded
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', window.aqiWeekSectionInit);
@@ -1492,16 +1492,16 @@ window.updateAirInsightWithAQI = updateAirInsightWithAQI;
 })();
 
 // 7-Day AQI Prediction Section Implementation - Stacked Graph Format
-(function() {
+(function () {
     // Namespaced function to initialize the AQI week section
-    window.aqiWeekSectionInit = function() {
+    window.aqiWeekSectionInit = function () {
         const aqiWeekSection = document.getElementById('aqi-week-section');
-        
+
         if (!aqiWeekSection) {
             console.warn('AQI week section container not found');
             return;
         }
-        
+
         // Create the AQI week section HTML structure
         aqiWeekSection.innerHTML = `
             <div class="aqi-week-header">
@@ -1550,25 +1550,25 @@ window.updateAirInsightWithAQI = updateAirInsightWithAQI;
                 </div>
             </div>
         `;
-        
+
         // Load AQI week data and render bars
         loadAQIWeekData();
-        
+
         // Add event listeners for toggle buttons
         const toggleButtons = aqiWeekSection.querySelectorAll('.aqi-week-toggle-btn');
         toggleButtons.forEach(button => {
-            button.addEventListener('click', function() {
+            button.addEventListener('click', function () {
                 // Update active button
                 toggleButtons.forEach(btn => btn.classList.remove('active'));
                 this.classList.add('active');
-                
+
                 // In a real implementation, you would load different data based on the selected period
                 // For now, we'll just reload the same data
                 loadAQIWeekData();
             });
         });
     };
-    
+
     // Function to load AQI week data (in a real app, this would fetch from an API)
     function loadAQIWeekData() {
         // Fetch real AQI week data from our local API
@@ -1579,24 +1579,24 @@ window.updateAirInsightWithAQI = updateAirInsightWithAQI;
                 const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
                 const today = new Date();
                 const forecastData = [];
-                
+
                 for (let i = 0; i < 7; i++) {
                     const date = new Date(today);
                     date.setDate(today.getDate() + i);
                     const dayName = days[date.getDay()];
-                    
+
                     // Use the current city's data as base and add some variation
-                    const currentCity = Object.keys(data.cities).find(key => 
+                    const currentCity = Object.keys(data.cities).find(key =>
                         data.cities[key] && !data.cities[key].error
                     );
-                    
+
                     if (currentCity && data.cities[currentCity]) {
                         const current = data.cities[currentCity];
                         const aqiVariation = Math.floor(current.aqi + (Math.random() * 60 - 30)); // ±30 variation
                         const pm25Variation = current.pm25 ? Math.floor(current.pm25 + (Math.random() * 30 - 15)) : Math.floor(aqiVariation * 0.6);
                         const pm10Variation = current.pm10 ? Math.floor(current.pm10 + (Math.random() * 40 - 20)) : Math.floor(aqiVariation * 0.8);
                         const tempVariation = current.temp ? Math.floor(current.temp + (Math.random() * 5 - 2.5)) : 25; // ±2.5 variation
-                        
+
                         // Determine condition based on AQI
                         let condition = 'Good';
                         if (aqiVariation > 300) condition = 'Hazardous';
@@ -1604,7 +1604,7 @@ window.updateAirInsightWithAQI = updateAirInsightWithAQI;
                         else if (aqiVariation > 150) condition = 'Unhealthy';
                         else if (aqiVariation > 100) condition = 'Unhealthy for Sensitive';
                         else if (aqiVariation > 50) condition = 'Moderate';
-                        
+
                         forecastData.push({
                             day: dayName,
                             aqi: Math.max(0, aqiVariation), // Ensure positive AQI
@@ -1615,7 +1615,7 @@ window.updateAirInsightWithAQI = updateAirInsightWithAQI;
                         });
                     }
                 }
-                
+
                 renderAQIWeekBars(forecastData);
             })
             .catch(error => {
@@ -1624,30 +1624,30 @@ window.updateAirInsightWithAQI = updateAirInsightWithAQI;
                 const forecastData = generateDummyAQIWeekData();
                 renderAQIWeekBars(forecastData);
             });
-        
+
         // Using dummy data for now
         const forecastData = generateDummyAQIWeekData();
         renderAQIWeekBars(forecastData);
     }
-    
+
     // Function to generate dummy AQI week data
     function generateDummyAQIWeekData() {
         const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
         const forecast = [];
-        
+
         for (let i = 0; i < 7; i++) {
             // Generate realistic AQI data with some variation
             const baseAQI = 100 + i * 20;
             const variation = Math.floor(Math.random() * 40) - 20; // -20 to +20
             const aqi = Math.max(30, baseAQI + variation); // Minimum 30
-            
+
             // Generate PM2.5 and PM10 based on AQI
             const pm25 = Math.floor(aqi * 0.6 + Math.random() * 20);
             const pm10 = Math.floor(aqi * 0.8 + Math.random() * 30);
-            
+
             // Generate temperature
             const temp = Math.floor(25 + Math.sin(i) * 5 + Math.random() * 5);
-            
+
             // Determine condition based on AQI
             let condition = 'Good';
             if (aqi > 300) condition = 'Hazardous';
@@ -1655,7 +1655,7 @@ window.updateAirInsightWithAQI = updateAirInsightWithAQI;
             else if (aqi > 150) condition = 'Unhealthy';
             else if (aqi > 100) condition = 'Unhealthy for Sensitive';
             else if (aqi > 50) condition = 'Moderate';
-            
+
             forecast.push({
                 day: days[i],
                 aqi: aqi,
@@ -1665,25 +1665,25 @@ window.updateAirInsightWithAQI = updateAirInsightWithAQI;
                 condition: condition
             });
         }
-        
+
         return forecast;
     }
-    
+
     // Function to render AQI week bars
     function renderAQIWeekBars(forecastData) {
         const container = document.getElementById('aqiWeekBarsContainer');
         const detailsContainer = document.getElementById('aqiWeekDetailsContainer');
-        
+
         if (!container) {
             console.error('AQI week bars container not found');
             return;
         }
-        
+
         // Clear existing content
         container.innerHTML = '';
         detailsContainer.innerHTML = '';
         detailsContainer.classList.remove('active');
-        
+
         // Check if we have data
         if (!forecastData || forecastData.length === 0) {
             container.innerHTML = `
@@ -1695,35 +1695,35 @@ window.updateAirInsightWithAQI = updateAirInsightWithAQI;
             `;
             return;
         }
-        
+
         // Find max value for scaling
         const allValues = [];
         forecastData.forEach(day => {
             allValues.push(day.aqi, day.pm25, day.pm10);
         });
         const maxValue = Math.max(...allValues, 400); // Ensure minimum scale of 400
-        
+
         // Create and append bars for each day
         forecastData.forEach((dayData, index) => {
             const barGroup = createAQIWeekBarGroup(dayData, maxValue, index);
             container.appendChild(barGroup);
         });
     }
-    
+
     // Function to create a single AQI week bar group
     function createAQIWeekBarGroup(data, maxValue, index) {
         const barGroup = document.createElement('div');
         barGroup.className = 'aqi-week-bar-group';
         barGroup.dataset.index = index;
-        
+
         // Calculate heights as percentages
         const aqiHeight = (data.aqi / maxValue) * 100;
         const pm25Height = (data.pm25 / maxValue) * 100;
         const pm10Height = (data.pm10 / maxValue) * 100;
-        
+
         // Get AQI color class
         const aqiColorClass = getAQIColorClass(data.aqi);
-        
+
         barGroup.innerHTML = `
             <div class="aqi-week-bar-tooltip">
                 <div><strong>${data.day}</strong></div>
@@ -1739,19 +1739,19 @@ window.updateAirInsightWithAQI = updateAirInsightWithAQI;
             <div class="aqi-week-bar-aqi-value">${data.aqi}</div>
             <div class="aqi-week-bar-day">${data.day}</div>
         `;
-        
+
         // Add color class to the main AQI bar
         const aqiBar = barGroup.querySelector('.aqi-week-bar');
         aqiBar.classList.add(aqiColorClass);
-        
+
         // Add click event to show details
-        barGroup.addEventListener('click', function() {
+        barGroup.addEventListener('click', function () {
             showAQIWeekDetails(data);
         });
-        
+
         return barGroup;
     }
-    
+
     // Function to get AQI color class
     function getAQIColorClass(aqi) {
         if (aqi <= 50) return 'good';
@@ -1761,21 +1761,21 @@ window.updateAirInsightWithAQI = updateAirInsightWithAQI;
         if (aqi <= 300) return 'very-unhealthy';
         return 'hazardous';
     }
-    
+
     // Function to show AQI week details
     function showAQIWeekDetails(data) {
         const detailsContainer = document.getElementById('aqiWeekDetailsContainer');
-        
+
         if (!detailsContainer) {
             console.error('AQI week details container not found');
             return;
         }
-        
+
         // Get AQI color class and description
         const aqiColorClass = getAQIColorClass(data.aqi);
         const aqiDescription = getAQIDescription(data.aqi);
         const recommendation = getRecommendation(data.aqi);
-        
+
         detailsContainer.innerHTML = `
             <div class="aqi-week-details-header">
                 <div class="aqi-week-details-day">${data.day} - Detailed Air Quality</div>
@@ -1811,18 +1811,18 @@ window.updateAirInsightWithAQI = updateAirInsightWithAQI;
                 </div>
             </div>
         `;
-        
+
         detailsContainer.classList.add('active');
-        
+
         // Add close button event
         const closeButton = document.getElementById('aqiWeekDetailsClose');
         if (closeButton) {
-            closeButton.addEventListener('click', function() {
+            closeButton.addEventListener('click', function () {
                 detailsContainer.classList.remove('active');
             });
         }
     }
-    
+
     // Function to get AQI description
     function getAQIDescription(aqi) {
         if (aqi <= 50) return 'Good';
@@ -1832,7 +1832,7 @@ window.updateAirInsightWithAQI = updateAirInsightWithAQI;
         if (aqi <= 300) return 'Very Unhealthy';
         return 'Hazardous';
     }
-    
+
     // Function to get recommendation based on AQI
     function getRecommendation(aqi) {
         if (aqi <= 50) return 'Air quality is satisfactory. Enjoy outdoor activities.';
@@ -1842,7 +1842,7 @@ window.updateAirInsightWithAQI = updateAirInsightWithAQI;
         if (aqi <= 300) return 'Health alert! Everyone should avoid all outdoor exertion. Stay indoors and keep windows closed.';
         return 'Health warning of emergency conditions. The entire population is more likely to be affected. Avoid all physical outdoor activities.';
     }
-    
+
     // Initialize the AQI week section when the DOM is loaded
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', window.aqiWeekSectionInit);
@@ -1852,7 +1852,7 @@ window.updateAirInsightWithAQI = updateAirInsightWithAQI;
 })();
 
 // Add search functionality to main page
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     // Set up search functionality
     setupMainPageSearch();
 });
@@ -1864,41 +1864,41 @@ function setupMainPageSearch() {
     const searchInput = document.getElementById('searchInput');
     const searchResults = document.getElementById('searchResults');
     const searchClose = document.getElementById('searchClose');
-    
+
     if (!searchTrigger || !searchDropdown) return;
-    
+
     // Show search dropdown when search icon is clicked
-    searchTrigger.addEventListener('click', function(e) {
+    searchTrigger.addEventListener('click', function (e) {
         e.preventDefault();
         showSearchDropdown();
     });
-    
+
     // Close search dropdown when close button is clicked
-    searchClose.addEventListener('click', function() {
+    searchClose.addEventListener('click', function () {
         hideSearchDropdown();
     });
-    
+
     // Close search dropdown when clicking outside
-    document.addEventListener('click', function(e) {
-        if (searchDropdown && searchDropdown.style.display === 'block' && 
-            !searchDropdown.contains(e.target) && 
+    document.addEventListener('click', function (e) {
+        if (searchDropdown && searchDropdown.style.display === 'block' &&
+            !searchDropdown.contains(e.target) &&
             !searchTrigger.contains(e.target)) {
             hideSearchDropdown();
         }
     });
-    
+
     // Handle input in search field
-    searchInput.addEventListener('input', function() {
+    searchInput.addEventListener('input', function () {
         filterStates(this.value);
     });
-    
+
     // Handle keyboard navigation
-    searchInput.addEventListener('keydown', function(e) {
+    searchInput.addEventListener('keydown', function (e) {
         const items = searchResults.querySelectorAll('li');
         const activeItem = searchResults.querySelector('.active');
         let currentIndex = Array.prototype.indexOf.call(items, activeItem);
-        
-        switch(e.key) {
+
+        switch (e.key) {
             case 'ArrowDown':
                 e.preventDefault();
                 if (currentIndex < items.length - 1) {
@@ -1930,7 +1930,7 @@ function setupMainPageSearch() {
                 break;
         }
     });
-    
+
     // Load states data for search
     loadStatesDataForSearch();
 }
@@ -1939,7 +1939,7 @@ function setupMainPageSearch() {
 function showSearchDropdown() {
     const searchDropdown = document.getElementById('searchDropdown');
     const searchInput = document.getElementById('searchInput');
-    
+
     if (searchDropdown) {
         // Position the dropdown relative to the search trigger
         const searchTrigger = document.querySelector('.nave-save');
@@ -1948,7 +1948,7 @@ function showSearchDropdown() {
             searchDropdown.style.top = rect.bottom + 10 + 'px';
             searchDropdown.style.right = (window.innerWidth - rect.right) + 'px';
         }
-        
+
         searchDropdown.style.display = 'block';
         searchInput.focus();
         filterStates(''); // Show all states initially
@@ -1960,7 +1960,7 @@ function hideSearchDropdown() {
     const searchDropdown = document.getElementById('searchDropdown');
     const searchInput = document.getElementById('searchInput');
     const searchResults = document.getElementById('searchResults');
-    
+
     if (searchDropdown) {
         searchDropdown.style.display = 'none';
         if (searchInput) searchInput.value = '';
@@ -2009,11 +2009,11 @@ function loadStatesDataForSearch() {
 function filterStates(query) {
     const searchResults = document.getElementById('searchResults');
     if (!searchResults || !window.statesData) return;
-    
-    const filteredStates = window.statesData.filter(state => 
+
+    const filteredStates = window.statesData.filter(state =>
         state.state.toLowerCase().includes(query.toLowerCase())
     );
-    
+
     displaySearchResults(filteredStates);
 }
 
@@ -2021,9 +2021,9 @@ function filterStates(query) {
 function displaySearchResults(states) {
     const searchResults = document.getElementById('searchResults');
     if (!searchResults) return;
-    
+
     searchResults.innerHTML = '';
-    
+
     if (states.length === 0) {
         const li = document.createElement('li');
         li.textContent = 'No states found';
@@ -2031,20 +2031,20 @@ function displaySearchResults(states) {
         searchResults.appendChild(li);
         return;
     }
-    
+
     states.forEach((state, index) => {
         const li = document.createElement('li');
         li.textContent = state.state.charAt(0).toUpperCase() + state.state.slice(1);
-        li.addEventListener('click', function() {
+        li.addEventListener('click', function () {
             // Navigate to state page
             window.location.href = `state.html?name=${encodeURIComponent(state.state)}`;
         });
-        
+
         // Add active class to first item
         if (index === 0) {
             li.classList.add('active');
         }
-        
+
         searchResults.appendChild(li);
     });
 }
@@ -2053,14 +2053,14 @@ function displaySearchResults(states) {
 async function applyUserSettings() {
     const token = localStorage.getItem('authToken');
     if (!token) return;
-    
+
     try {
         const response = await fetch('/api/preferences', {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
         });
-        
+
         if (response.ok) {
             const preferences = await response.json();
             applySettings(preferences);
@@ -2073,48 +2073,48 @@ async function applyUserSettings() {
 // Apply settings to the page
 function applySettings(preferences) {
     if (!preferences) return;
-    
+
     // Apply theme
     if (preferences.theme) {
         document.body.className = document.body.className.replace(/theme-\w+/g, '');
         document.body.classList.add(`theme-${preferences.theme}`);
     }
-    
+
     // Apply temperature unit (this would affect how temperatures are displayed)
     if (preferences.temperature_unit) {
         // In a full implementation, you would update all temperature displays
         // For now, we'll just log it
         console.log('Temperature unit set to:', preferences.temperature_unit);
     }
-    
+
     // Apply AQI scale
     if (preferences.aqi_scale) {
         // In a full implementation, you would update how AQI is calculated/displayed
         console.log('AQI scale set to:', preferences.aqi_scale);
     }
-    
+
     // Load default city if set
     if (preferences.default_city) {
         // In a full implementation, you would load data for this city
         console.log('Default city set to:', preferences.default_city);
     }
-    
+
     // Apply display preferences
     if (preferences.show_24hr_forecast !== undefined) {
         // Toggle 24-hour forecast visibility
         console.log('24-hour forecast visibility:', preferences.show_24hr_forecast);
     }
-    
+
     if (preferences.show_week_prediction !== undefined) {
         // Toggle week prediction visibility
         console.log('Week prediction visibility:', preferences.show_week_prediction);
     }
-    
+
     if (preferences.show_health_advice !== undefined) {
         // Toggle health advice visibility
         console.log('Health advice visibility:', preferences.show_health_advice);
     }
-    
+
     if (preferences.show_global_compare !== undefined) {
         // Toggle global comparison visibility
         console.log('Global comparison visibility:', preferences.show_global_compare);
@@ -2122,7 +2122,7 @@ function applySettings(preferences) {
 }
 
 // Call applyUserSettings when the page loads
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     applyUserSettings();
     // Set up search functionality
     setupMainPageSearch();
