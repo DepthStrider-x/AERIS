@@ -282,7 +282,7 @@ AERIS/
 
 #### 1️⃣ Clone the Repository
 ```bash
-git clone https://github.com/YourUsername/AERIS.git
+git clone https://github.com/DepthStrider-x/AERIS
 cd AERIS
 ```
 
