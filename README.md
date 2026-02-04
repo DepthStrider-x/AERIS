@@ -12,7 +12,11 @@ A full-stack, real-time air quality monitoring web application that provides **l
 
 ## 📹 Project Demo
 
-![Project Demo Placeholder](https://via.placeholder.com/800x400?text=AERIS+Dashboard+Preview)
+
+
+https://github.com/user-attachments/assets/6d1dbc84-4003-4389-9311-c2ec0121ce02
+
+
 
 ---
 
